@@ -1,0 +1,72 @@
+/* ... (Mantén la parte del .hero-section igual, porque la foto queda bien oscura) ... */
+
+.hero-section {
+  /* El texto del hero DEBE ser blanco porque está sobre la foto oscura */
+  color: white; 
+  /* ... resto de tu hero css ... */
+  background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("https://images.unsplash.com/photo-1520045864981-8fee18241669?auto=format&fit=crop&q=80");
+  background-size: cover;
+  background-position: center;
+  height: 350px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
+
+.hero-title {
+   font-size: 3rem;
+   text-transform: uppercase;
+   color: white;
+}
+
+/* --- CAMBIOS PARA FONDO BLANCO --- */
+
+.section-title {
+  color: var(--text-primary); /* Título negro */
+  border-left: 4px solid var(--accent);
+  padding-left: 10px;
+  margin-bottom: 20px;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.product-card {
+  background-color: #ffffff; /* Tarjeta blanca */
+  border: 1px solid #eee;    /* Borde sutil */
+  padding: 15px;
+  border-radius: 8px;
+  transition: transform 0.2s ease, box-shadow 0.2s;
+  cursor: pointer;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1); /* Sombra elegante */
+  border-color: var(--accent);
+}
+
+.card-image-placeholder {
+  height: 180px;
+  background-color: #f0f0f0; /* Gris muy clarito para el hueco de foto */
+  margin-bottom: 15px;
+  border-radius: 4px;
+}
+
+.product-card h3 {
+  font-size: 1rem;
+  margin-bottom: 8px;
+  color: var(--text-primary); /* Texto negro */
+}
+
+.card-price {
+  color: var(--accent);
+  font-weight: bold;
+  font-size: 1.1rem;
+}

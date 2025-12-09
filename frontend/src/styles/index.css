@@ -1,0 +1,31 @@
+:root {
+  --bg-dark: #121212;       /* Fondo casi negro */
+  --bg-card: #1e1e1e;       /* Fondo de tarjetas/sidebar */
+  --accent: #ff4d00;        /* Naranja estilo skate/urbano */
+  --text-primary: #ffffff;
+  --text-secondary: #b3b3b3;
+  --sidebar-width: 250px;
+  --header-height: 70px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; /* Fuente limpia */
+  background-color: var(--bg-dark);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+}

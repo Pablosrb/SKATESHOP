@@ -1,0 +1,55 @@
+/* src/styles/Navbar.css */
+
+/* El contenedor de la navegación */
+.navbar-nav {
+  display: flex;
+  align-items: center;
+  gap: 2rem; /* Espacio entre enlaces */
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Los enlaces individuales */
+.nav-link {
+  position: relative;
+  font-size: 0.9rem;
+  font-weight: 800; /* Letra muy gruesa */
+  text-transform: uppercase;
+  color: var(--color-text-main);
+  text-decoration: none;
+  letter-spacing: 0.5px;
+  transition: color 0.2s ease;
+  padding: 5px 0;
+}
+
+/* Efecto Hover: Cambia a naranja */
+.nav-link:hover {
+  color: var(--color-accent);
+}
+
+/* Efecto de línea subrayada animada al pasar el ratón */
+.nav-link::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 3px;
+  bottom: 0;
+  left: 0;
+  background-color: var(--color-accent); /* La línea es naranja */
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+  width: 100%; /* La línea crece hasta ocupar todo el ancho */
+}
+
+/* Clase automática que pone React Router cuando el enlace está activo */
+.nav-link.active {
+  color: var(--color-text-main);
+}
+
+.nav-link.active::after {
+  width: 100%;
+  background-color: var(--color-text-main); /* La línea fija es negra */
+}

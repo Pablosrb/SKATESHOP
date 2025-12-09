@@ -1,0 +1,24 @@
+/* Contenedor que ocupa toda la pantalla */
+.app-container {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  overflow: hidden; /* Evita scroll doble */
+}
+
+/* El área derecha que contiene Header + Contenido */
+.main-wrapper {
+  flex: 1; /* Ocupa el espacio restante que deja la Sidebar */
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  margin-left: var(--sidebar-width); /* Importante si la sidebar es fixed */
+}
+
+/* Área donde va el HomePage o CatalogoPage */
+.content-area {
+  flex: 1;
+  overflow-y: auto; /* Hace scroll solo el contenido, no el header */
+  padding: 2rem;
+  background-color: var(--bg-dark);
+}

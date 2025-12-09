@@ -1,0 +1,173 @@
+/* src/styles/ProductPage.css */
+
+.product-page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-bottom: 4rem;
+}
+
+/* --- MIGA DE PAN (Breadcrumbs) --- */
+.breadcrumbs {
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+  color: #888;
+}
+.breadcrumbs span {
+  margin: 0 5px;
+}
+
+/* --- LAYOUT PRINCIPAL (2 COLUMNAS) --- */
+.product-main-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Mitad y mitad */
+  gap: 40px;
+  margin-bottom: 4rem;
+}
+
+/* Responsivo: En móvil, una sola columna */
+@media (max-width: 768px) {
+  .product-main-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+/* --- GALERÍA DE IMÁGENES (Izquierda) --- */
+.product-gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.main-image-container {
+  width: 100%;
+  height: 500px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #eee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.main-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ajusta la foto sin deformarla */
+}
+
+.thumbnail-list {
+  display: flex;
+  gap: 10px;
+}
+
+.thumbnail {
+  width: 80px;
+  height: 80px;
+  border-radius: 4px;
+  cursor: pointer;
+  object-fit: cover;
+  border: 2px solid transparent;
+  opacity: 0.7;
+  transition: 0.2s;
+}
+
+.thumbnail:hover, .thumbnail.active {
+  border-color: var(--accent); /* Naranja */
+  opacity: 1;
+}
+
+/* --- INFO DEL PRODUCTO (Derecha) --- */
+.product-info {
+  padding: 10px;
+}
+
+.product-brand {
+  text-transform: uppercase;
+  color: #888;
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+}
+
+.product-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin: 10px 0;
+  line-height: 1.1;
+  text-transform: uppercase;
+  font-style: italic;
+}
+
+.product-price {
+  font-size: 1.8rem;
+  color: var(--accent); /* Naranja */
+  font-weight: bold;
+  margin-bottom: 20px;
+  display: block;
+}
+
+.product-description {
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+/* --- SELECTOR DE TALLAS --- */
+.size-selector-label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.size-options {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+.size-btn {
+  padding: 10px 20px;
+  border: 1px solid #ddd;
+  background: white;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.size-btn:hover {
+  border-color: #333;
+}
+
+.size-btn.selected {
+  background-color: #111;
+  color: white;
+  border-color: #111;
+}
+
+/* --- BOTÓN DE COMPRA --- */
+.action-buttons {
+  display: flex;
+  gap: 15px;
+}
+
+.add-to-cart-btn {
+  flex: 1; /* Ocupa todo el ancho posible */
+  background-color: var(--accent);
+  color: white;
+  padding: 15px;
+  border: none;
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.add-to-cart-btn:hover {
+  background-color: #e04400; /* Naranja más oscuro */
+}
