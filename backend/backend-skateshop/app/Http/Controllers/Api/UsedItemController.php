@@ -45,27 +45,32 @@ class UsedItemController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'title' => 'required|string|max:255',
+        $validatedData = $request->validate([
+            'title'       => 'required|string|max:255',
             'description' => 'nullable|string',
-            'price' => 'required|numeric|min:0',
-            'condition' => 'nullable|string|max:50',
-            'image' => 'nullable|string|max:255',
-            'status' => 'nullable|in:active,sold,archived'
+            'price'       => 'required|numeric|min:0',
+            'condition'   => 'nullable|string|max:50',
+            // Importante: validar que es una imagen real
+            'image'       => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'status'      => 'nullable|in:active,sold,archived'
         ]);
 
-        $item = UsedItem::create([
-            'user_id' => Auth::id(),
-            'title' => $request->title,
-            'description' => $request->description,
-            'price' => $request->price,
-            'condition' => $request->condition ?? 'used',
-            'image' => $request->image,
-            'status' => $request->status ?? 'active',
-        ]);
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('used_items', 'public');
+            $validatedData['image'] = $path;
+        } else {
+            $validatedData['image'] = null;
+        }
+
+        // La validación no incluye el user_id, así que lo añadimos manualmente
+        $validatedData['user_id'] = Auth::id();
+        $validatedData['condition'] = $request->condition ?? 'used';
+        $validatedData['status'] = $request->status ?? 'active';
+
+        $item = UsedItem::create($validatedData);
 
         return response()->json([
-            'message' => 'Artículo creado correctamente',
+            'message' => 'Producto de segunda mano creado',
             'data' => $item
         ], 201);
     }

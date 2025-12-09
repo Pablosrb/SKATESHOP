@@ -20,6 +20,19 @@ class UsedItem extends Model
         'status',
     ];
 
+    protected $appends = ['image_url'];
+
+    // 2. CREAMOS EL "ACCESSOR" (GetImageUrlAttribute)
+    public function getImageUrlAttribute()
+    {
+        if ($this->image) {
+            // Esto genera: http://localhost:8000/storage/used_items/foto.jpg
+            return asset('storage/' . $this->image);
+        }
+
+        return null;
+    }
+
     // Relación con usuario
     public function user()
     {

@@ -17,7 +17,8 @@ export interface UsedItem {
     image: string | null;
     status: 'active' | 'sold' | 'archived';
     created_at: string;
-    
+    image_url?: string;
+
     // Relación con el usuario (vendedor)
     user?: User; 
 }

@@ -48,6 +48,10 @@ const Header: React.FC = () => {
     closeMenu();
   };
 
+  const handleMyItems = () => {
+    navigate('/mis-anuncios'); 
+  };
+
   return (
     <header className="header">
       
@@ -100,6 +104,9 @@ const Header: React.FC = () => {
               <div className="dropdown-menu">
                 <button className="dropdown-item" onClick={handleProfileClick}>
                   👤 Perfil
+                </button>
+                <button className="dropdown-item" onClick={handleMyItems}>
+                  📂 Mis Anuncios  
                 </button>
                 <div className="dropdown-divider"></div>
                 <button className="dropdown-item logout" onClick={handleLogout}>

@@ -1,6 +1,7 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { type UsedItem } from '@/types/usedItem';
-import '@/styles/ProductCard.css'; // Reutilizamos estilos básicos
+import '@/styles/ProductCard.css';
 
 interface UsedItemCardProps {
     item: UsedItem;
@@ -8,8 +9,13 @@ interface UsedItemCardProps {
 
 const UsedItemCard: React.FC<UsedItemCardProps> = ({ item }) => {
     
-    const imageUrl = item.image 
-        ? item.image 
+    const navigate = useNavigate();
+    const handleViewDetail = () => {
+        navigate(`/segunda-mano/${item.id}`);
+    };
+
+    const imageUrl = item.image
+        ? item.image_url
         : 'https://placehold.co/300x300?text=Sin+Imagen';
 
     // Función simple para traducir el estado visualmente
@@ -20,7 +26,7 @@ const UsedItemCard: React.FC<UsedItemCardProps> = ({ item }) => {
     };
 
     return (
-        <div className="product-card">
+        <div className="product-card" onClick={handleViewDetail}>
             {/* ETIQUETA DE ESTADO (Esquina superior) */}
             <div style={{ position: 'absolute', top: '10px', right: '10px', zIndex: 10 }}>
                 <span style={{ 

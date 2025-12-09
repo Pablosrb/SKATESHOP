@@ -1,0 +1,47 @@
+.skateparks-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    min-height: 80vh;
+}
+
+.text-content {
+    text-align: center;
+}
+
+.text-content h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    font-style: italic;
+}
+
+.subtitle {
+    color: #666;
+    margin-top: 10px;
+}
+
+/* IMPORTANTE: Contenedor del mapa */
+.map-wrapper {
+    height: 500px; /* Altura fija para el mapa */
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    border: 1px solid #ddd;
+}
+
+/* Clase interna de la librería */
+.leaflet-map {
+    height: 100%;
+    width: 100%;
+    z-index: 1; /* Para que no tape menús desplegables del header */
+}
+
+@media (max-width: 768px) {
+    .map-wrapper {
+        height: 350px; /* Un poco más pequeño en móvil */
+    }
+}

@@ -27,8 +27,8 @@ const SecondHandPage: React.FC = () => {
         fetchItems();
     }, []);
 
-    const handleSellClick = () => {
-        navigate('/vender'); 
+    const handleMyItems = () => {
+        navigate('/mis-anuncios'); 
     };
 
     return (
@@ -47,23 +47,27 @@ const SecondHandPage: React.FC = () => {
                     <h1 style={{ margin: 0 }}>Segunda Mano</h1>
                     <p style={{ margin: '5px 0 0 0', color: '#666' }}>Compra y vende material usado de nuestra comunidad</p>
                 </div>
-                
-                <button 
-                    onClick={handleSellClick}
-                    style={{
-                        backgroundColor: 'var(--color-accent, #f97316)',
-                        color: 'white',
-                        border: 'none',
-                        padding: '12px 24px',
-                        borderRadius: '6px',
-                        fontWeight: 'bold',
-                        cursor: 'pointer',
-                        fontSize: '1rem',
-                        boxShadow: '0 2px 5px rgba(0,0,0,0.1)'
-                    }}
-                >
-                    + Vender mi material
-                </button>
+
+                <div className="catalog-actions">
+                    <button 
+                        className="btn-outline" 
+                        onClick={handleMyItems}
+
+                        style={{
+                            backgroundColor: 'var(--color-accent, #f97316)',
+                            color: 'white',
+                            border: 'none',
+                            padding: '12px 24px',
+                            borderRadius: '6px',
+                            fontWeight: 'bold',
+                            cursor: 'pointer',
+                            fontSize: '1rem',
+                            boxShadow: '0 2px 5px rgba(0,0,0,0.1)'
+                        }}
+                    >
+                        📂 Mis Anuncios
+                    </button>
+                </div>
             </div>
 
             {/* ESTADOS DE CARGA / ERROR */}

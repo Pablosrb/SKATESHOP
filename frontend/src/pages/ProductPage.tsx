@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { getProductById } from '../services/productService';
 import { type Product } from '../types/product';
 import '../styles/ProductPage.css';
 
 const ProductPage: React.FC = () => {
   const { id } = useParams<{ id: string }>(); // Captura el ID de la URL
+  const navigate = useNavigate();
   
   // Estados de datos
   const [product, setProduct] = useState<Product | null>(null);
@@ -72,6 +73,10 @@ const ProductPage: React.FC = () => {
         {/* Aquí preguntamos: ¿Existe product.category? Si sí, pon su nombre. Si no, pon "Catálogo" */}
         Inicio <span>/</span> {product.category?.name || 'Catálogo'} <span>/</span> {product.name}
       </div>
+
+      <button onClick={() => navigate('/catalogo')} style={{ marginBottom: '20px', cursor: 'pointer', background:'none', border:'none', textDecoration:'underline' }}>
+        ← Volver al catálogo
+      </button>
 
       <div className="product-main-grid">
         

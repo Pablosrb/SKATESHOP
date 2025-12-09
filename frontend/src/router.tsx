@@ -11,6 +11,10 @@ import RegisterPage from '@/pages/RegisterPage';
 
 
 import ProtectedRoute from '@/components/ProtectedRoute';
+import UploadProductPage from './pages/UploadProductPage';
+import UsedProductPage from './pages/UsedProductPage';
+import MyUsedItemsPage from './pages/MyUsedItemsPage';
+import SkateparksPage from './pages/SkateparksPage';
 
 
 
@@ -40,6 +44,10 @@ export const router = createBrowserRouter([
                 element: <RegisterPage />,
             },
             {
+                path: '/skatesparks', // El nombre que querías
+                element: <SkateparksPage />,
+            },
+            {
                 element: <ProtectedRoute />, 
                 children: [
                     {
@@ -48,7 +56,15 @@ export const router = createBrowserRouter([
                     },
                     {
                         path: '/vender',
-                        element: <div>Formulario de Venta (Próximamente)</div>
+                        element: <UploadProductPage />,
+                    },
+                    {
+                        path: '/segunda-mano/:id',
+                        element: <UsedProductPage />,
+                    },
+                    {
+                        path: '/mis-anuncios',
+                        element: <MyUsedItemsPage />,
                     }
                 ]
             }
