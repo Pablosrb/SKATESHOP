@@ -1,60 +1,105 @@
-import React from 'react';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import 'leaflet/dist/leaflet.css'; // Importante: Estilos del mapa
+import React, { useState } from 'react';
+import { Map, Marker, Overlay } from 'pigeon-maps';
 import '../styles/SkateparksPage.css';
 
-// --- ARREGLO PARA ICONOS DE LEAFLET EN REACT ---
-import L from 'leaflet';
-import icon from 'leaflet/dist/images/marker-icon.png';
-import iconShadow from 'leaflet/dist/images/marker-shadow.png';
-
-let DefaultIcon = L.icon({
-    iconUrl: icon,
-    shadowUrl: iconShadow,
-    iconSize: [25, 41],
-    iconAnchor: [12, 41]
-});
-
-L.Marker.prototype.options.icon = DefaultIcon;
-// -----------------------------------------------
-
-// Datos de ejemplo (Skateparks en Málaga)
 const skateparks = [
-    { id: 1, name: "Skatepark Málaga (Rubén Alcántara)", coords: [36.7385, -4.4534], desc: "El mejor park de la ciudad. Bowl increíble." },
-    { id: 2, name: "Skatepark Rincón de la Victoria", coords: [36.7171, -4.2753], desc: "Pequeño pero divertido, frente al mar." },
-    { id: 3, name: "Skatepark Fuengirola", coords: [36.5363, -4.6226], desc: "Mucha calle y módulos variados." },
+    // --- MÁLAGA CAPITAL ---
+    { 
+        id: 1, 
+        name: "Skatepark Málaga (Rubén Alcántara)", 
+        anchor: [36.7385, -4.4534] as [number, number], 
+        desc: "El templo. Bowl de competición y zona street pro." 
+    },
+    { 
+        id: 2, 
+        name: "Skatepark Rincón de la Victoria", 
+        anchor: [36.7171, -4.2753] as [number, number], 
+        desc: "Pequeño, frente al mar. Vistas increíbles." 
+    },
+    { 
+        id: 3, 
+        name: "Skatepark Torre del Mar", 
+        anchor: [36.7397, -4.0934] as [number, number], 
+        desc: "Módulos variados y bastante amplio." 
+    },
+    { 
+        id: 4, 
+        name: "Skatepark Fuengirola", 
+        anchor: [36.5363, -4.6226] as [number, number], 
+        desc: "Ignacio Echeverría. Muy completo y céntrico." 
+    },
+    { 
+        id: 5, 
+        name: "Skatepark Marbella (Trapiche)", 
+        anchor: [36.5178, -4.8805] as [number, number], 
+        desc: "Renovado y con buenas líneas." 
+    },
+    { 
+        id: 6, 
+        name: "Skatepark Alhaurín de la Torre", 
+        anchor: [36.6668, -4.5598] as [number, number], 
+        desc: "Diseño moderno y muy divertido." 
+    },
+    { 
+        id: 7, 
+        name: "Skatepark San Rafael", 
+        anchor: [36.7078, -4.4515] as [number, number], 
+        desc: "Spot local en Cruz de Humilladero. Módulos de calle y ambiente urbano." 
+    }
 ];
 
 const SkateparksPage: React.FC = () => {
-  // Coordenadas iniciales (Centro de Málaga)
-  const defaultCenter: [number, number] = [36.7213, -4.4214];
+  // Ajustamos el zoom a 9 o 10 para ver desde Rincón hasta Marbella
+  const [center, setCenter] = useState<[number, number]>([36.6500, -4.5000]); 
+  const [zoom, setZoom] = useState(10);
 
   return (
     <div className="skateparks-container">
       <div className="text-content">
-        <h1>📍 Encuentra tu Spot</h1>
-        <p>Explora los mejores skateparks de la zona. Haz clic en los marcadores para ver más info.</p>
-        <p className="subtitle">¿Conoces algún spot secreto? ¡Escríbenos para añadirlo!</p>
+        <h1>📍 Mapa de Spots</h1>
+        <p>Descubre los mejores skateparks de la Costa del Sol.</p>
       </div>
 
       <div className="map-wrapper">
-        <MapContainer center={defaultCenter} zoom={11} scrollWheelZoom={true} className="leaflet-map">
-          {/* Capa del mapa (El diseño visual) */}
-          <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
-
-          {/* Marcadores */}
+        <Map 
+            height={550} // Un poco más alto para ver mejor
+            center={center} 
+            zoom={zoom} 
+            onBoundsChanged={({ center, zoom }) => { 
+                setCenter(center); 
+                setZoom(zoom); 
+            }}
+        >
+          {/* 1. MARCADORES (Puntos Naranjas) */}
           {skateparks.map(park => (
-            <Marker key={park.id} position={park.coords as [number, number]}>
-              <Popup>
-                <strong>{park.name}</strong> <br /> 
-                {park.desc}
-              </Popup>
-            </Marker>
+             <Marker 
+                key={park.id} 
+                width={40} // Tamaño del pin
+                anchor={park.anchor} 
+                color="#ff4d00" 
+                onClick={() => alert(`🛹 ${park.name}\n\n${park.desc}`)}
+             />
           ))}
-        </MapContainer>
+
+          {/* 2. ETIQUETAS (Texto flotante) */}
+          {skateparks.map(park => (
+            <Overlay key={'ov-' + park.id} anchor={park.anchor} offset={[0, 30]}>
+              <div className="map-label" style={{
+                  background: 'white', 
+                  padding: '3px 6px', 
+                  borderRadius: '4px', 
+                  fontSize: '11px', 
+                  fontWeight: 'bold',
+                  boxShadow: '0 2px 4px rgba(0,0,0,0.3)',
+                  whiteSpace: 'nowrap',
+                  cursor: 'pointer',
+                  border: '1px solid #ddd'
+              }}>
+                {park.name}
+              </div>
+            </Overlay>
+          ))}
+        </Map>
       </div>
     </div>
   );

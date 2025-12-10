@@ -1,72 +1,128 @@
-/* ... (Mantén la parte del .hero-section igual, porque la foto queda bien oscura) ... */
+/* --- HERO SECTION DIVIDIDO --- */
 
-.hero-section {
-  /* El texto del hero DEBE ser blanco porque está sobre la foto oscura */
-  color: white; 
-  /* ... resto de tu hero css ... */
-  background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("https://images.unsplash.com/photo-1520045864981-8fee18241669?auto=format&fit=crop&q=80");
+.hero-split-container {
+  display: flex;
+  height: 450px;
+  width: 100%;
+  margin-bottom: 3rem;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  background-color: #000; /* Fondo negro por si acaso carga lento */
+}
+
+.hero-half {
+  flex: 1; /* Ocupan el mismo espacio por defecto */
+  position: relative;
   background-size: cover;
   background-position: center;
-  height: 350px;
+  cursor: pointer;
+  transition: flex 0.5s cubic-bezier(0.25, 0.8, 0.25, 1); /* Transición suave tipo elástico */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 0; /* Evita que el contenido desborde en flex */
+}
+/* FONDOS */
+.hero-half.left {
+  background-image: url('../../public/images/hero-home/image-catalog-hero.png');
+}
+
+.hero-half.right {
+  background-image: url('../../public/images/hero-home/image-events-hero.jpg');
+}
+
+/* EFECTO DE MOVIMIENTO */
+/* Al poner el ratón en uno, ese crece (flex: 2) y el otro se queda igual (flex: 1) */
+.hero-half:hover {
+  flex: 2; 
+}
+
+/* CAPA OSCURA */
+.hero-overlay {
+  background: rgba(182, 168, 168, 0.5);
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border-radius: 8px;
-  margin-bottom: 2rem;
+  transition: background 0.3s;
+  /* Importante para que el texto no salte raro al redimensionar */
+  white-space: nowrap; 
 }
 
-.hero-title {
-   font-size: 3rem;
-   text-transform: uppercase;
-   color: white;
+.hero-half:hover .hero-overlay {
+  background: rgba(0, 0, 0, 0.3);
 }
 
-/* --- CAMBIOS PARA FONDO BLANCO --- */
-
-.section-title {
-  color: var(--text-primary); /* Título negro */
-  border-left: 4px solid var(--accent);
-  padding-left: 10px;
-  margin-bottom: 20px;
+/* --- LA LÍNEA CENTRAL --- */
+.hero-divider {
+  width: 4px; /* Grosor de la línea vertical */
+  background-color: white; /* Color de la línea */
+  height: 100%;
+  position: relative; /* Para centrar el círculo dentro de ella */
+  z-index: 10;
+  flex-shrink: 0; /* Evita que la línea se aplaste */
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Sombra para que destaque */
 }
 
-.product-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 20px;
+/* --- EL CÍRCULO 'OR' --- */
+.or-circle {
+  width: 50px;
+  height: 50px;
+  background-color: white;
+  border-radius: 50%;
+  
+  /* Centrado absoluto SOBRE la línea */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  font-weight: 900;
+  font-style: italic;
+  font-size: 1rem;
+  color: #111;
+  border: 4px solid white; /* Borde negro para separarlo visualmente de la línea blanca */
 }
 
-.product-card {
-  background-color: #ffffff; /* Tarjeta blanca */
-  border: 1px solid #eee;    /* Borde sutil */
-  padding: 15px;
-  border-radius: 8px;
-  transition: transform 0.2s ease, box-shadow 0.2s;
-  cursor: pointer;
+/* TEXTOS (Igual que antes) */
+.split-title {
+  font-size: 4rem;
+  color: white;
+  text-transform: uppercase;
+  margin: 0;
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: -2px;
+  text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
 }
 
-.product-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.1); /* Sombra elegante */
-  border-color: var(--accent);
-}
+.split-title.highlight { color: #ff4d00; }
 
-.card-image-placeholder {
-  height: 180px;
-  background-color: #f0f0f0; /* Gris muy clarito para el hueco de foto */
-  margin-bottom: 15px;
+.split-subtitle {
+  color: #fff;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-top: 15px;
+  background: rgba(0,0,0,0.8);
+  padding: 8px 16px;
   border-radius: 4px;
 }
 
-.product-card h3 {
-  font-size: 1rem;
-  margin-bottom: 8px;
-  color: var(--text-primary); /* Texto negro */
-}
-
-.card-price {
-  color: var(--accent);
-  font-weight: bold;
-  font-size: 1.1rem;
-}
+/* Resto del CSS igual... */
+.home-content { padding-bottom: 50px; }
+.featured-section { max-width: 1200px; margin: 0 auto; padding: 0 20px;}
+.section-title { color: var(--text-primary); text-align: center; margin-bottom: 40px; font-size: 2rem; text-transform: uppercase; font-weight: 800; }
+.product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; justify-content: center; }

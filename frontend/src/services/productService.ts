@@ -6,30 +6,8 @@ export const getProducts = async (): Promise<Product[]> => {
     try {
         const response = await api.get('/products');
         
-        // LOG PARA DEPURAR: Esto saldrá en la consola del navegador (F12)
-        console.log('📡 STATUS:', response.status);
-        console.log('📦 DATA RAW:', response.data);
-
-        // Estrategia de extracción de datos:
-        const data = response.data;
-
-        // CASO 1: Laravel devuelve directamente el array (ej: return Product::all())
-        if (Array.isArray(data)) {
-            return data;
-        }
-
-        // CASO 2: Laravel devuelve un Resource o Paginación (ej: { data: [...] })
-        if (data && Array.isArray(data.data)) {
-            return data.data;
-        }
-
-        // CASO 3: Tu estructura personalizada (ej: { products: [...] })
-        if (data && Array.isArray(data.products)) {
-            return data.products;
-        }
-
-        console.error('⚠️ Formato de respuesta inesperado:', data);
-        return []; // Retornamos array vacío para que no rompa la web
+        return response.data.products;
+        
 
     } catch (error) {
         console.error('❌ Error en la petición:', error);
@@ -41,7 +19,7 @@ export const getProducts = async (): Promise<Product[]> => {
 export const getProductById = async (id: string): Promise<Product> => {
   // Usamos 'any' en el get temporalmente para que TypeScript no se queje 
   // de que la respuesta tiene un campo 'message' extra.
-  const response = await api.get<any>(`/products/${id}`);
+  const response = await api.get(`/products/${id}`);
   
   // ¡AQUÍ ESTÁ LA SOLUCIÓN!
   // Accedemos a .data (de axios) y luego a .product (de tu JSON)

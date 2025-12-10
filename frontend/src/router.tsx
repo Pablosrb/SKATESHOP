@@ -15,6 +15,7 @@ import UploadProductPage from './pages/UploadProductPage';
 import UsedProductPage from './pages/UsedProductPage';
 import MyUsedItemsPage from './pages/MyUsedItemsPage';
 import SkateparksPage from './pages/SkateparksPage';
+import ProfilePage from './pages/ProfilePage';
 
 
 
@@ -65,6 +66,10 @@ export const router = createBrowserRouter([
                     {
                         path: '/mis-anuncios',
                         element: <MyUsedItemsPage />,
+                    },
+                    {
+                        path: '/perfil',
+                        element: <ProfilePage />,
                     }
                 ]
             }
