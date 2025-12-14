@@ -15,7 +15,6 @@ class UsedItemController extends Controller
     public function myItems()
     {
         $userId = auth()->id();
-
         $items = UsedItem::with('user')
             ->where('user_id', $userId)
             ->latest()
@@ -50,7 +49,7 @@ class UsedItemController extends Controller
             'description' => 'nullable|string',
             'price'       => 'required|numeric|min:0',
             'condition'   => 'nullable|string|max:50',
-            // Importante: validar que es una imagen real
+            // validar que es una imagen real
             'image'       => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'status'      => 'nullable|in:active,sold,archived'
         ]);
@@ -62,7 +61,7 @@ class UsedItemController extends Controller
             $validatedData['image'] = null;
         }
 
-        // La validación no incluye el user_id, así que lo añadimos manualmente
+        // La validacion no incluye el user_id, asi que lo añadimos manualmente
         $validatedData['user_id'] = Auth::id();
         $validatedData['condition'] = $request->condition ?? 'used';
         $validatedData['status'] = $request->status ?? 'active';
@@ -102,7 +101,7 @@ class UsedItemController extends Controller
             return response()->json(['message' => 'Artículo no encontrado'], 404);
         }
 
-        // Verificar ownership
+        // Verificar si es del usuario el product
         if ($item->user_id !== Auth::id()) {
             return response()->json(['message' => 'No tienes permiso para actualizar este artículo'], 403);
         }
@@ -135,7 +134,7 @@ class UsedItemController extends Controller
             return response()->json(['message' => 'Artículo no encontrado'], 404);
         }
 
-        // Verificar ownership
+        // Verificar si es del usuario el product
         if ($item->user_id !== Auth::id()) {
             return response()->json(['message' => 'No tienes permiso para eliminar este artículo'], 403);
         }

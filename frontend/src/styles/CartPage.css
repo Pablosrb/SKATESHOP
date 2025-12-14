@@ -1,0 +1,163 @@
+.cart-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.cart-empty-state {
+    text-align: center;
+    padding: 100px 20px;
+}
+
+.cart-layout {
+    display: grid;
+    grid-template-columns: 2fr 1fr; /* 2 partes lista, 1 parte resumen */
+    gap: 30px;
+    margin-top: 20px;
+}
+
+/* TARJETA DE PRODUCTO EN CARRITO */
+.cart-item-card {
+    display: flex;
+    align-items: center;
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    border: 1px solid #eee;
+}
+
+.item-image img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-right: 20px;
+}
+
+.item-details {
+    flex: 1;
+}
+
+.item-details h3 {
+    margin: 0 0 5px 0;
+    font-size: 1.1rem;
+}
+
+.item-price {
+    font-weight: bold;
+    color: #333;
+}
+
+.badge {
+    font-size: 0.75rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+    text-transform: uppercase;
+}
+.badge.new { background: #e0f2fe; color: #0284c7; }
+.badge.used { background: #fef9c3; color: #a16207; }
+
+/* CONTROLES CANTIDAD */
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.quantity-controls button {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #ddd;
+    background: #f9f9f9;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.btn-remove {
+    background: none;
+    border: none;
+    color: #ef4444;
+    cursor: pointer;
+    font-size: 0.9rem;
+    text-decoration: underline;
+}
+
+/* RESUMEN DERECHA */
+.cart-summary {
+    background: #f8f9fa;
+    padding: 25px;
+    border-radius: 8px;
+    height: fit-content;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    color: #555;
+}
+
+.summary-total {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 20px 0;
+}
+
+.btn-checkout {
+    width: 100%;
+    padding: 15px;
+    background: black;
+    color: white;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 6px;
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+
+.btn-continue-shopping {
+    width: 100%;
+    padding: 10px;
+    background: transparent;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    border-radius: 6px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .cart-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ... tus estilos anteriores ... */
+
+/* Añadir feedback visual de que es un enlace */
+.cart-item-card .clickable {
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+/* Efecto hover en la imagen */
+.cart-item-card .item-image.clickable:hover {
+    opacity: 0.8;
+}
+
+/* Efecto hover en el texto */
+.cart-item-card .item-details.clickable:hover h3 {
+    color: var(--color-accent, #f97316); /* O el color naranja de tu marca */
+    text-decoration: underline;
+}
+
+/* Ajuste para que la imagen no se deforme */
+.item-image img {
+    /* ... lo que tenías antes ... */
+    object-fit: contain; /* O cover, según prefieras */
+}

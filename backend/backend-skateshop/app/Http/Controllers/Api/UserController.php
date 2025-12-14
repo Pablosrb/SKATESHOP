@@ -6,13 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-//TODO:
-//index() → Listar todos los usuarios (solo admins)
-//show($id) → Ver datos de un usuario específico
-//update($id) → Editar datos de un usuario (propio o admin)
-//destroy($id) → Eliminar usuario (solo admin)
-
-
 class UserController extends Controller
 {
     /**
@@ -23,7 +16,7 @@ class UserController extends Controller
 
         $user = auth()->user(); // comprobamos si esta la sesion iniciada
 
-        if ($user && $user->role === 'admin') { //si es admin lita los usuarios
+        if ($user && $user->role === 'admin') { //si es admin lista los usuarios
 
             return response()->json([
                 'message' => 'Admin: Lista de todos los usuarios',
@@ -32,24 +25,16 @@ class UserController extends Controller
 
         }
 
-        //si no es admin, da igual, va a dar error,
         return response()->json([
             'message' => 'No se permite esta accion',
         ], 404);
 
     }
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        // si se quiere registar un usuario, que se haga con el register
-    }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id) // ver datos de un usuario en concreto
+    public function show(string $id)
     {
         $authUser = auth()->user();
         $requestedUser = User::find($id);
@@ -85,7 +70,7 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id) // Editar datos de un usuario (propio o admin)
+    public function update(Request $request, string $id) // Editar datos de un usuario
     {
         $authUser = auth()->user();
         $userToUpdate = User::find($id);
@@ -118,14 +103,12 @@ class UserController extends Controller
             $request->request->remove('role');
         }
 
-        // Si viene password, encriptarla
         if ($request->has('password')) {
             $request->merge([
                 'password' => bcrypt($request->password)
             ]);
         }
 
-        // Actualizar usuario
         $userToUpdate->update($request->all());
 
         return response()->json([
@@ -134,33 +117,5 @@ class UserController extends Controller
         ], 200);
     }
 
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id) // Eliminar usuario (solo admin)
-    {
-        $authUser = auth()->user();
-
-        if ($authUser->role !== 'admin') {
-            return response()->json([
-                'message' => 'No tienes permisos para eliminar usuarios.'
-            ], 403);
-        }
-
-        $user = User::find($id);
-
-        if (!$user) {
-            return response()->json([
-                'message' => 'Usuario no encontrado.'
-            ], 404);
-        }
-
-        $user->delete();
-
-        return response()->json([
-            'message' => 'Usuario eliminado correctamente.'
-        ], 200);
-    }
 
 }

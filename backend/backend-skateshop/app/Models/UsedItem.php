@@ -9,7 +9,6 @@ class UsedItem extends Model
 {
     use HasFactory;
 
-    // Campos que se pueden rellenar masivamente
     protected $fillable = [
         'user_id',
         'title',
@@ -22,7 +21,7 @@ class UsedItem extends Model
 
     protected $appends = ['image_url'];
 
-    // 2. CREAMOS EL "ACCESSOR" (GetImageUrlAttribute)
+    //  CREAMOS EL "ACCESSOR" (GetImageUrlAttribute)
     public function getImageUrlAttribute()
     {
         if ($this->image) {
@@ -33,7 +32,6 @@ class UsedItem extends Model
         return null;
     }
 
-    // Relación con usuario
     public function user()
     {
         return $this->belongsTo(User::class);

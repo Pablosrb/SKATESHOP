@@ -9,17 +9,6 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 
 
-// Hay que tener en cuenta que cada usuario puede hacer lo que sea con sus PROPIOS order, pero un admin puede hacerlo con TODOS
-// esto implica que vamos a tener que controlarlo aquí, simplemente revisamos el auth()->user()->role
-// Mirar ultima conversación sale explicado brevemente el flujo que tiene que seguir
-
-// metodos que tenemos que completar que estan en el api.php
-// only(['index', 'store', 'show', 'destroy'], porque el update no lo vamos a contemplar, si se quiere hacer un update va a tener que eliminar el pedido y volver a hacerlo, eso no se contempla
-// También solo se podrá hacer destroy de un order cuando este pedido este "pending",ya que es el status que tiene
-// el pedido cuando se acaba de ralizar, si tiene cualquier otra cosa, como por ejemplo en preparación o enviado
-// no se va a poder hacer el destroy del order.
-// (Contemplar si hace falta cambiar algo en el migration para solo tener 3 estados, pending, preparation, send), aunque se vaya a controlar mediante un select en el panel del admin.
-
 class OrderController extends Controller
 {
     /**
@@ -40,7 +29,6 @@ class OrderController extends Controller
                 'usuario' => auth()->user()->name
             ], 200);
         }
-
 
         if ($userRole === "admin") { // Todos los pedidos
 
@@ -75,7 +63,6 @@ class OrderController extends Controller
             'items.*.quantity' => 'required|integer|min:1',
         ];
 
-        // SI ES ADMIN → PERMITIR user_id
         if ($userRole === 'admin') {
             $rules['user_id'] = 'required|exists:users,id';
         }
@@ -85,7 +72,7 @@ class OrderController extends Controller
         // DEFINIR EL USER_ID FINAL
         $finalUserId = ($userRole === 'admin')
             ? $validated['user_id']
-            : auth()->id(); // USER normal → se asigna solo
+            : auth()->id(); // USER normal se asigna solo
 
         // 1 CREAR EL PEDIDO
         $order = Order::create([
@@ -94,44 +81,31 @@ class OrderController extends Controller
             'status' => 'pending',
         ]);
 
-        // 2 AÑADIR LOS PRODUCTOS (order_items)
+        // AÑADIR LOS PRODUCTOS
         $total = 0;
 
         foreach ($validated['items'] as $item) {
-            $product = Product::find($item['product_id']); // buscamos el producto en la tabla product mediante el id para coger el precio  y saber si existe
+            $product = Product::find($item['product_id']); // Buscamos el producto en la tabla product mediante el id para coger el precio  y saber si existe
 
             OrderItem::create([
                 'order_id' => $order->id,
                 'product_id' => $product->id,
                 'quantity' => $item['quantity'],
-                'price' => $product->price,  // guardamos precio actual del producto
+                'price' => $product->price,  // Guardamos precio actual del producto
             ]);
 
             // sumar al total
             $total += $product->price * $item['quantity'];
         }
 
-        // 3 ACTUALIZAR EL TOTAL DEL PEDIDO
+        // ACTUALIZAR EL TOTAL DEL PEDIDO
         $order->update(['total_price' => $total]);
 
-        // 4 RESPUESTA
         return response()->json([
             'message' => 'Pedido creado correctamente',
             'order' => $order->load('items.product'),
         ], 201);
     }
-
-
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-
 
     /**
      * Display the specified resource.
@@ -153,15 +127,6 @@ class OrderController extends Controller
             'message' => 'Detalle del pedido',
             'order' => $order
         ]);
-    }
-
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
     }
 
     /**
@@ -188,15 +153,6 @@ class OrderController extends Controller
         ], 200);
     }
 
-
-
-    /**
-     * Remove the specified resource from storage.
-     */
-//    public function destroy(string $id)
-//    {
-//        //
-//    }
     /**
      * Remove the specified resource from storage.
      */

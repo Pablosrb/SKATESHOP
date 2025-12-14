@@ -1,7 +1,11 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { type Product } from '@/types/product';
+
+import { useCart } from '@/context/CartContext';
+
 import '@/styles/ProductCard.css'; // Asegúrate de que este archivo existe
+
 
 interface ProductCardProps {
     product: Product;
@@ -18,6 +22,7 @@ const getStockStatus = (stock: number) => {
 };
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+    const { addToCart } = useCart(); 
     // Lógica segura para la imagen: Si es null, ponemos un placeholder
     const imageUrl = product.image 
         ? product.image 
@@ -31,9 +36,17 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     };
 
     const handleAddToCart = (e: React.MouseEvent) => {
-        e.stopPropagation(); // "Detiene" el clic aquí para que no suba al padre
-        console.log("Añadir al carrito:", product.name);
-        // Aquí iría tu lógica de añadir al carrito en el futuro
+        e.stopPropagation();
+
+        addToCart({
+            id: product.id,
+            name: product.name,
+            price: parseFloat(product.price), 
+            image: product.image || undefined,         
+            quantity: 1,
+        });
+        
+        alert('¡Añadido al carrito!');
     };
 
     const stockStatus = getStockStatus(product.stock);
@@ -84,6 +97,3 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 };
 
 export default ProductCard;
-
-
-

@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, NavLink, useLocation } from 'react-router-dom'; // Usamos NavLink para detectar la ruta activa
+import { useNavigate, NavLink, useLocation } from 'react-router-dom';
+
+import { useCart } from '@/context/CartContext'; 
+
 import '../styles/Header.css';
 
 const Header: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation(); //Para detectar si cambiamos de ruta y asi checkear el user
   
+  const { cartCount } = useCart();
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);  
   const [isDropdownOpen, setIsDropdownOpen] = useState(false); // Menú usuario 
   const [user, setUser] = useState<any>(null);
@@ -86,7 +91,7 @@ const Header: React.FC = () => {
         <button className="btn-icon" aria-label="Buscar">🔍</button>
 
         <button className="btn-cart" onClick={() => navigate('/carrito')}>
-           🛒 <span className="cart-count">0</span>
+          🛒 <span className="cart-count">{cartCount}</span>
         </button>
 
         {/* LÓGICA DE USUARIO */}

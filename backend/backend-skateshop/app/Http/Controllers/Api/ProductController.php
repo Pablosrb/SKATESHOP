@@ -28,7 +28,7 @@ class ProductController extends Controller
         }
         return response()->json([
             'message' => 'No has iniciado sesion o eres un cliente, solo puedes ver el catalogo.',
-            'products' => $products/*Product::all()*/
+            'products' => $products
         ]);
     }
 
@@ -40,28 +40,18 @@ class ProductController extends Controller
         // Buscar el producto por ID e incluir categoría y marca
         $product = Product::with('category', 'brand')->find($id);
 
-        // Si no existe, devolver error 404
         if (!$product) {
             return response()->json([
                 'message' => 'Producto no encontrado.'
             ], 404);
         }
 
-        // Devolver detalles del producto
         return response()->json([
             'message' => 'Detalles del producto.',
             'product' => $product
         ]);
 
 
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -97,19 +87,6 @@ class ProductController extends Controller
         ]);
 
         return response()->json(['data' => $product], 201);
-
-
-
-    }
-
-
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        // Esto se usa para mostrar un formulario html en la api no se usa.
     }
 
     /**

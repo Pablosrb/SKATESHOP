@@ -21,8 +21,6 @@ return new class extends Migration {
             $table->foreign('category_id')->references('id')->on('categories');
             $table->foreign('brand_id')->references('id')->on('brands');
 
-//            $table->foreignId('category_id')->constrained('categories');
-//            $table->foreignId('brand_id')->nullable()->constrained('brands');
 
 
         });

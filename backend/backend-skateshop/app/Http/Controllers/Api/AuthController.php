@@ -11,20 +11,13 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
-    //
 
     public function register(Request $request)
     {
-//        return response()->json([
-//            'message'=> 'Locao',
-//        ]);
-
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|unique:users',
             'password' => 'required|min:8',
-
-
         ]);
 
         if ($validator->fails()) {
@@ -35,7 +28,6 @@ class AuthController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => $request->role ?? 'user'
         ]);
 
         $token = $user->createToken('auth_token')->plainTextToken;
@@ -54,7 +46,6 @@ class AuthController extends Controller
             return response()->json(['message'=>'Unauthorized'], 401);
         }
 
-//        $user = User::where('email', $request->email)->firstOrFail();
         $user = Auth::user();
         $token = $user->createToken('auth_token')->plainTextToken;
 

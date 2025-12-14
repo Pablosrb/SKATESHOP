@@ -15,10 +15,13 @@ export const createUsedItem = async (formData: FormData): Promise<UsedItem> => {
     // Al pasar FormData, Axios detecta automáticamente que debe enviar 'multipart/form-data'
     // y el navegador pone el boundary correcto. No hace falta configurar headers.
     try {
-        const response = await api.post('/used-items', formData);
+        const response = await api.post('/used-items', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
         return response.data.data || response.data;
     } catch (error: any) {
-        // Manejo de errores específico para subidas
         if (error.response && error.response.data) {
             throw new Error(error.response.data.message || 'Error al subir el producto');
         }

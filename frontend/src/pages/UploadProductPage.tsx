@@ -39,11 +39,11 @@ const UploadProductPage: React.FC = () => {
     try {
       const userStr = localStorage.getItem('user_data');
       if (!userStr) throw new Error("Usuario no identificado");
-      const user = JSON.parse(userStr);
+      // const user = JSON.parse(userStr);
 
       // 1. Preparamos el FormData igual que antes
       const dataToSend = new FormData();
-      dataToSend.append('user_id', user.id);
+      // dataToSend.append('user_id', user.id);
       dataToSend.append('title', formData.title);
       dataToSend.append('price', formData.price);
       dataToSend.append('description', formData.description);

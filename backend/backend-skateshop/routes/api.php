@@ -1,61 +1,72 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\{ProductController,
-    OrderController,
-    UsedItemController,
-    UserController,
+use App\Http\Controllers\Api\{
+    AuthController,
+    ProductController,
     EventController,
-    CustomSkateController,
-    AuthController};
+    UserController,
+    OrderController,
+    UsedItemController
+};
 
-// Rutas públicas (sin JWT)
-// Auth
-Route::get('adios', [AuthController::class, 'adios']);
+/*
+|--------------------------------------------------------------------------
+| RUTAS PÚBLICAS (Sin Token)
+|--------------------------------------------------------------------------
+*/
 
+// Autenticación
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
 
-// Catálogo público (solo ver productos)
-Route::apiResource('products', ProductController::class)->only(['index', 'show']);// Solo podemos ver el catalogo completo (index) y cuando entremos en un producto (show)
+// Catálogos (Solo lectura)
+Route::apiResource('products', ProductController::class)->only(['index', 'show']);
+Route::apiResource('events', EventController::class)->only(['index', 'show']);
 
-//  Rutas protegidas (requieren JWT)
+/*
+|--------------------------------------------------------------------------
+| RUTAS PROTEGIDAS (Requieren Token)
+|--------------------------------------------------------------------------
+*/
 Route::middleware('auth:sanctum')->group(function () {
 
-    // Perfil de usuario
+    // --- ACCIONES DE USUARIO ---
+
+    // Perfil y Sesión
+    Route::post('logout', [AuthController::class, 'logout']);
     Route::get('me', [UserController::class, 'me']);
-    Route::apiResource('users', UserController::class)->only(['show', 'update', 'destroy']); // Solo puede ver, editar o eliminar su propio usuario desde el controlador
 
-    // Órdenes de compra
-    Route::apiResource('orders', OrderController::class)->only(['index', 'store', 'show', 'destroy']); // → El usuario puede crear (comprar), ver sus pedidos, listar los suyos y cancelarlos (destroy)
+    // El usuario solo puede ver/editar su propio perfil (controlado en el Controller)
+    Route::apiResource('users', UserController::class)->only(['show', 'update', 'destroy']);
 
-    // Eventos
-    Route::get('events', [EventController::class, 'index']); // listar eventos
-    Route::post('events/{event}/join', [EventController::class, 'join']); // unirse a evento
+    // Compras y Pedidos
+    Route::apiResource('orders', OrderController::class)->only(['index', 'store', 'show', 'destroy']);
 
-    // Skates personalizados
-    Route::apiResource('custom-skates', CustomSkateController::class); // El usuario puede crear, editar, eliminar sus propios diseños
-
-    // market de segunda mano, solo accesible si esta la sesion iniciada
+    // Segunda Mano
     Route::get('used-items/my-items', [UsedItemController::class, 'myItems']);
     Route::apiResource('used-items', UsedItemController::class);
 
+    // Torneos (Unirse)
+    Route::post('events/{id}/join', [EventController::class, 'join']);
 
 
-    // Cerrar sesión
-    Route::post('logout', [AuthController::class, 'logout']);
-
-
-    // Rutas solo para ADMIN
+    // --- ZONA DE ADMIN ---
     Route::middleware('role:admin')->group(function () {
 
-        Route::apiResource('products', ProductController::class)->except(['index', 'show']); // Catálogo de la tienda (CRUD completo)
+        // Gestión de Tienda
+        Route::apiResource('products', ProductController::class)->except(['index', 'show']); // Crear, Editar, Borrar
 
-        Route::apiResource('users', UserController::class)->except(['show', 'update', 'destroy']); // Gestión de usuarios (ver todos, eliminar, editar)
+        // Gestión de Usuarios
+        Route::apiResource('users', UserController::class)->except(['show', 'update', 'destroy']); // Ver todos
 
-        Route::apiResource('events', EventController::class)->except(['index']); // Gestión de eventos (crear, editar, eliminar)
+        // Gestión de Pedidos (Solo actualizar estado)
+        Route::apiResource('orders', OrderController::class)->only(['update']);
 
-        Route::apiResource('orders', OrderController::class)->only(['update']); // Solo se va a poder cambiar el status, y solo el admin va a poder
-        //Route::put('orders/{order}', [OrderController::class, 'update']);
+        // Gestión de Torneos (Crear, Editar, Borrar y Jugar)
+        Route::apiResource('events', EventController::class)->except(['index', 'show']);
+        Route::post('/events/{id}/start', [EventController::class, 'startTournament']);
+        Route::post('/matches/{id}/winner', [EventController::class, 'setWinner']);
     });
+
 });

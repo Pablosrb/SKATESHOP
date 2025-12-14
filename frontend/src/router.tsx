@@ -16,6 +16,10 @@ import UsedProductPage from './pages/UsedProductPage';
 import MyUsedItemsPage from './pages/MyUsedItemsPage';
 import SkateparksPage from './pages/SkateparksPage';
 import ProfilePage from './pages/ProfilePage';
+import CartPage from './pages/CartPage';
+import TournamentsPage from './pages/TournamentsPage';
+import TournamentDetailPage from './pages/TournamentDetailPage';
+import CreateTournamentPage from './pages/CreateTournamentPage';
 
 
 
@@ -45,9 +49,18 @@ export const router = createBrowserRouter([
                 element: <RegisterPage />,
             },
             {
-                path: '/skatesparks', // El nombre que querías
+                path: '/skatesparks',
                 element: <SkateparksPage />,
             },
+            {
+                path:'/events',
+                element: <TournamentsPage />,
+            },
+            {
+                path:'/events/:id',
+                element: <TournamentDetailPage/>,
+            },
+
             {
                 element: <ProtectedRoute />, 
                 children: [
@@ -70,6 +83,14 @@ export const router = createBrowserRouter([
                     {
                         path: '/perfil',
                         element: <ProfilePage />,
+                    },
+                    {
+                        path: '/admin/crear-torneo',
+                        element: <CreateTournamentPage />,
+                    },
+                    {
+                        path: '/carrito',
+                        element: <CartPage />
                     }
                 ]
             }

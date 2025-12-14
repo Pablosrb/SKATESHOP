@@ -10,11 +10,12 @@ return new class extends Migration {
             $table->id();
             $table->unsignedBigInteger('event_id');
             $table->unsignedBigInteger('user_id');
-            $table->integer('score')->nullable();
             $table->timestamps();
 
-            $table->foreign('event_id')->references('id')->on('events');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+
+            $table->unique(['event_id', 'user_id']);
         });
     }
 

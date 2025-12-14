@@ -1,3 +1,9 @@
+/*lA CARTA NO ESTA COGIENDO ESTOS CSS, ESTA COGIENDO LOS DE PRODUCTPAGE,
+POR ESO EL TITULO TAN GRANDE, ARREGLAR ESTO*/
+
+
+
+
 /* src/styles/ProductCard.css */
 .product-card {
   background: white;
@@ -65,7 +71,7 @@
 }
 
 .product-title {
-  font-size: 1rem;
+  font-size: 1.3rem;
   margin: 0;
   line-height: 1.2;
   white-space: nowrap;

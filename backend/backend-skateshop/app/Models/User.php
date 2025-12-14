@@ -23,7 +23,6 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role'
     ];
 
     /**
@@ -49,7 +48,11 @@ class User extends Authenticatable
         ];
     }
 
-    //TODO: TERMINAR EL METODO DE SHOW PRODUCTS QUE NECESITA UN ID PARA MOSTRAR EL PRODUCTO
+    public function tournaments()
+    {
+        return $this->belongsToMany(Event::class, 'event_participants');
+    }
+
 
 
 

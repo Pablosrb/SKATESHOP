@@ -1,0 +1,157 @@
+/* Contenedor */
+.tournaments-container {
+    padding: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    color: white; /* Asumiendo fondo oscuro global */
+}
+
+/* Cabecera */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.btn-create {
+    background-color: #ef4444;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Secciones */
+.section-block {
+    margin-bottom: 60px;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #333;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Colores por estado */
+.section-title.open { border-color: #ef4444; color: #ef4444; }    /* Rojo */
+.section-title.ongoing { border-color: #3b82f6; color: #3b82f6; } /* Azul */
+.section-title.finished { border-color: #eab308; color: #eab308; }/* Dorado */
+
+/* Grid */
+.tournament-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+/* Tarjeta */
+.tournament-card {
+    background: #1e1e1e;
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid #333;
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.2s;
+    overflow: hidden;
+}
+
+.tournament-card:hover {
+    transform: translateY(-5px);
+    border-color: #666;
+}
+
+.card-info {
+    color: #999;
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+}
+
+/* Badges (Etiquetas de estado) */
+.status-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 0.7rem;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+.status-badge.open { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
+.status-badge.ongoing { background: rgba(59, 130, 246, 0.2); color: #3b82f6; }
+.status-badge.finished { background: rgba(234, 179, 8, 0.2); color: #eab308; }
+
+/* Barra de progreso */
+.participants-bar {
+    margin-top: 10px;
+}
+.participants-bar span {
+    display: block;
+    font-size: 0.8rem;
+    margin-bottom: 5px;
+    color: #ccc;
+}
+progress {
+    width: 100%;
+    height: 8px;
+    border-radius: 4px;
+}
+/* Estilo del ganador */
+.winner-banner {
+    margin-top: 15px;
+    background: #eab308;
+    color: black;
+    text-align: center;
+    font-weight: bold;
+    padding: 5px;
+    border-radius: 4px;
+}
+
+.loading-container, .no-data {
+    text-align: center;
+    margin-top: 50px;
+    color: #888;
+}
+
+/* Botón de borrar flotante */
+.btn-delete-card {
+    position: absolute;
+    
+    /* CAMBIO: Lo colocamos a la derecha, pero bajándolo un poco */
+    /* El badge está en top:15px, así que ponemos esto en top:50px */
+    top: 50px; 
+    right: 15px;
+    
+    /* Reseteamos los otros por si acaso */
+    bottom: auto; 
+    left: auto;
+    
+    background: #1e1e1e;
+    border: 1px solid #444;
+    color: #ff5555;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    z-index: 20;
+    box-shadow: -2px 2px 5px rgba(0,0,0,0.3);
+}
+
+.btn-delete-card:hover {
+    background: #ff4444;
+    color: white;
+    transform: scale(1.1);
+    border-color: #ff4444;
+}

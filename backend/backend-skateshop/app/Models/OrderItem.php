@@ -16,7 +16,7 @@ class OrderItem extends Model
         'price',
     ];
 
-    public function order() //Pertenece a un pedido
+    public function order()
     {
         return $this->belongsTo(Order::class);
     }

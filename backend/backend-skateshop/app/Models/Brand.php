@@ -14,7 +14,6 @@ class Brand extends Model
         'country',
     ];
 
-    // Relación: una marca tiene muchos productos
     public function products()
     {
         return $this->hasMany(Product::class);
