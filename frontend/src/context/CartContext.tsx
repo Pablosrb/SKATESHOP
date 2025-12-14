@@ -1,13 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
+import { type CartItem } from "@/types/cartItem";
 
-// Simplificamos: Ya no hay 'type'
-export interface CartItem {
-    id: number; 
-    name: string;
-    price: number;
-    image?: string;
-    quantity: number;
-}
 
 interface CartContextType {
     cart: CartItem[];
@@ -15,26 +8,60 @@ interface CartContextType {
     removeFromCart: (id: number) => void;
     updateQuantity: (id: number, amount: number) => void;
     clearCart: () => void;
+    refreshCartUser: () => void;
     total: number;
     cartCount: number;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
+// --- HELPER PARA OBTENER LA CLAVE ---
+// Esto decide qué "cajón" abrir en el localStorage
+const getCartKey = () => {
+    const userData = localStorage.getItem('user_data');
+    if (userData) {
+        try {
+            const user = JSON.parse(userData);
+            // Cada usuario tiene su propia clave única
+            return `cart_user_${user.id}`;
+        } catch (e) {
+            return 'cart_guest';
+        }
+    }
+    return 'cart_guest';
+};
+
 export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    const [cart, setCart] = useState<CartItem[]>(() => {
-        const storedCart = localStorage.getItem('shopping_cart');
-        return storedCart ? JSON.parse(storedCart) : [];
-    });
+    // 1. Estado para la clave actual (para saber si estamos en modo guest o user)
+    const [currentKey, setCurrentKey] = useState<string>(getCartKey());
 
+    // 2. Estado del carrito
+    const [cart, setCart] = useState<CartItem[]>([]);
+
+    // EFECTO 1: CARGAR EL CARRITO CUANDO CAMBIA EL USUARIO (KEY)
     useEffect(() => {
-        localStorage.setItem('shopping_cart', JSON.stringify(cart));
-    }, [cart]);
+        const storedCart = localStorage.getItem(currentKey);
+        if (storedCart) {
+            setCart(JSON.parse(storedCart));
+        } else {
+            setCart([]); // Si es un usuario nuevo, empezamos vacío
+        }
+    }, [currentKey]);
 
-    // 1. AÑADIR (Lógica simplificada)
+    // EFECTO 2: GUARDAR EL CARRITO CUANDO CAMBIAN LOS ITEMS
+    useEffect(() => {
+        localStorage.setItem(currentKey, JSON.stringify(cart));
+    }, [cart, currentKey]);
+
+    // --- ACCIONES ---
+
+    // Esta función la llamaremos desde Login y Header cuando el usuario cambie
+    const refreshCartUser = () => {
+        setCurrentKey(getCartKey());
+    };
+
     const addToCart = (item: CartItem) => {
         setCart((prevCart) => {
-            // Buscamos solo por ID
             const existingItem = prevCart.find((i) => i.id === item.id);
             if (existingItem) {
                 return prevCart.map((i) =>
@@ -47,12 +74,10 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         });
     };
 
-    // 2. ELIMINAR
     const removeFromCart = (id: number) => {
         setCart((prevCart) => prevCart.filter((item) => item.id !== id));
     };
 
-    // 3. CANTIDAD
     const updateQuantity = (id: number, amount: number) => {
         setCart((prevCart) =>
             prevCart.map((item) => {
@@ -71,7 +96,16 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const cartCount = cart.reduce((acc, item) => acc + item.quantity, 0);
 
     return (
-        <CartContext.Provider value={{ cart, addToCart, removeFromCart, updateQuantity, clearCart, total, cartCount }}>
+        <CartContext.Provider value={{ 
+            cart, 
+            addToCart, 
+            removeFromCart, 
+            updateQuantity, 
+            clearCart, 
+            refreshCartUser, 
+            total, 
+            cartCount 
+        }}>
             {children}
         </CartContext.Provider>
     );

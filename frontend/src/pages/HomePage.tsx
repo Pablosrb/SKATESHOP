@@ -1,21 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getProducts } from '../services/productService'; 
-import { type Product } from '../types/product';
-import ProductCard from '../components/ProductCard'; 
-import '../styles/HomePage.css';
+import { getProducts } from '@/services/productService'; 
+import { type Product } from '@/types/product';
+import ProductCard from '@/components/ProductCard'; 
+import '@/styles/HomePage.css';
 
 const HomePage: React.FC = () => {
   const navigate = useNavigate();
   const [newArrivals, setNewArrivals] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
-  const STORAGE_URL = 'http://localhost:8000/storage';
 
   useEffect(() => {
     const fetchNovedades = async () => {
       try {
         const allProducts = await getProducts();
-        const sortedNews = [...allProducts].sort((a, b) => b.id - a.id).slice(0, 4);
+        const sortedNews = [...allProducts].sort((a, b) => b.id - a.id).slice(0, 4); // Total de novedades que queremos que salga
         setNewArrivals(sortedNews);
       } catch (error) {
         console.error("Error cargando novedades", error);

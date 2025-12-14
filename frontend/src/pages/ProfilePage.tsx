@@ -27,13 +27,9 @@ const ProfilePage: React.FC = () => {
         password_confirmation: '' 
     });
 
-    // 1. CARGAR DATOS AL INICIAR
     useEffect(() => {
         const fetchUserData = async () => {
-            // Obtenemos el ID del localStorage (guardado en el Login)
             const storedToken = localStorage.getItem('user_token');
-            // A veces guardamos el objeto user entero, si no, hay que decodificar token o llamar a /me
-            // Asumiremos que guardaste el objeto user o al menos el ID al hacer login.
             const storedUserStr = localStorage.getItem('user_data');
 
             if (!storedToken || !storedUserStr) {
@@ -44,7 +40,6 @@ const ProfilePage: React.FC = () => {
             try {
                 const localUser = JSON.parse(storedUserStr);
                 
-                // Llamamos a la API para tener los datos frescos de la BD
                 const dbUser = await getUserProfile(localUser.id);
                 
                 setUser(dbUser);
@@ -54,7 +49,6 @@ const ProfilePage: React.FC = () => {
                 });
             } catch (error) {
                 console.error('Error cargando perfil:', error);
-                // Si falla el token, al login
                 navigate('/login');
             } finally {
                 setLoading(false);
@@ -64,7 +58,6 @@ const ProfilePage: React.FC = () => {
         fetchUserData();
     }, [navigate]);
 
-    // 2. MANEJAR CAMBIOS INPUTS
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
@@ -73,22 +66,20 @@ const ProfilePage: React.FC = () => {
         setPassData({ ...passData, [e.target.name]: e.target.value });
     };
 
-    // 3. ACTUALIZAR NOMBRE
+    //Actualizar nombre
     const handleUpdateProfile = async (e: React.FormEvent) => {
         e.preventDefault();
         setMessage(null);
         if (!user) return;
 
         try {
-            // Enviamos solo el name (el email no se toca)
             await updateUserProfile(user.id, { name: formData.name });
             
             setMessage({ type: 'success', text: 'Perfil actualizado correctamente.' });
             
-            // Actualizamos el user local para refrescar la UI
             setUser({ ...user, name: formData.name });
 
-            // Opcional: Actualizar localStorage para el Header
+            // Actualizar localStorage para el Header
             const storedUser = JSON.parse(localStorage.getItem('user_data') || '{}');
             storedUser.name = formData.name;
             localStorage.setItem('user_data', JSON.stringify(storedUser));
@@ -98,7 +89,6 @@ const ProfilePage: React.FC = () => {
         }
     };
 
-    // 4. ACTUALIZAR PASSWORD
     const handleUpdatePassword = async (e: React.FormEvent) => {
         e.preventDefault();
         setMessage(null);
@@ -119,7 +109,7 @@ const ProfilePage: React.FC = () => {
             setMessage({ type: 'success', text: 'Contraseña cambiada con éxito.' });
             setPassData({ current_password: '', password: '', password_confirmation: '' });
         } catch (error: any) {
-            // Laravel suele devolver 422 si la current_password está mal
+            // Laravel eevuleve 422 si la current_password está mal
             const msg = error.response?.data?.message || 'Error al cambiar contraseña. Verifica tu clave actual.';
             setMessage({ type: 'error', text: msg });
         }
@@ -142,7 +132,6 @@ const ProfilePage: React.FC = () => {
                 )}
             </div>
 
-            {/* PESTAÑAS */}
             <div className="profile-tabs">
                 <button 
                     className={`tab-btn ${activeTab === 'profile' ? 'active' : ''}`}
@@ -158,7 +147,6 @@ const ProfilePage: React.FC = () => {
                 </button>
             </div>
 
-            {/* ALERTAS */}
             {message && (
                 <div className={`alert-msg ${message.type}`}>
                     {message.text}
@@ -166,11 +154,11 @@ const ProfilePage: React.FC = () => {
             )}
 
             <div className="tab-content">
-                {/* --- PESTAÑA 1: PERFIL --- */}
+                {/* Perfil */}
                 {activeTab === 'profile' && (
                     <div className="profile-forms">
                         
-                        {/* DATOS BÁSICOS */}
+                        {/* Datos */}
                         <div className="form-section">
                             <h3>Información Personal</h3>
                             <form onSubmit={handleUpdateProfile}>
@@ -245,7 +233,7 @@ const ProfilePage: React.FC = () => {
                     </div>
                 )}
 
-                {/* --- PESTAÑA 2: PEDIDOS --- */}
+                {/* Pedidos */}
                 {activeTab === 'orders' && (
                     <div className="orders-placeholder">
                         <div className="wip-icon">📦</div>

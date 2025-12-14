@@ -1,19 +1,12 @@
-// src/utils/bracketTransform.ts
-
-// traductor entre el back y la libreria
+// Traductor entre el back y la libreria
 
 export const transformDataForGloot = (laravelMatches: any[]) => {
     if (!laravelMatches || laravelMatches.length === 0) return [];
 
-    // 1. Descubrir cuál es la ronda más alta (La Final)
-    // Buscamos el número máximo en la propiedad 'round' de todos los partidos
+    
     const maxRound = Math.max(...laravelMatches.map(m => m.round));
 
-    // Función auxiliar para poner nombre bonito
     const getRoundName = (roundNumber: number, totalRounds: number) => {
-        // La diferencia entre la ronda final y la actual nos dice qué es
-        // Ej: Total 4. Ronda 4 (diff 0) -> Final
-        // Ej: Total 4. Ronda 3 (diff 1) -> Semis
         const diff = totalRounds - roundNumber;
 
         switch (diff) {
@@ -28,7 +21,6 @@ export const transformDataForGloot = (laravelMatches: any[]) => {
     return laravelMatches.map((match) => {
         const participants = [];
         
-        // ... (Lógica de participantes igual que antes: player1 y player2) ...
         if (match.player1) {
              participants.push({
                  id: match.player1.id,
@@ -52,11 +44,9 @@ export const transformDataForGloot = (laravelMatches: any[]) => {
         } else {
              participants.push({ id: `tbd2-${match.id}`, name: 'Esperando...', isWinner: false });
         }
-        // ... (Fin lógica participantes) ...
 
         return {
             id: match.id,
-            // 👇 AQUÍ ESTÁ EL CAMBIO IMPORTANTE: Usamos la función de nombres
             name: getRoundName(match.round, maxRound), 
             nextMatchId: match.next_match_id,
             tournamentRoundText: match.round.toString(),

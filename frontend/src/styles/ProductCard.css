@@ -1,10 +1,3 @@
-/*lA CARTA NO ESTA COGIENDO ESTOS CSS, ESTA COGIENDO LOS DE PRODUCTPAGE,
-POR ESO EL TITULO TAN GRANDE, ARREGLAR ESTO*/
-
-
-
-
-/* src/styles/ProductCard.css */
 .product-card {
   background: white;
   border: 1px solid rgba(0,0,0,0.08); /* Invisible porner trasnparent por el rgba */
@@ -17,16 +10,16 @@ POR ESO EL TITULO TAN GRANDE, ARREGLAR ESTO*/
 }
 
 .product-card:hover {
-  /* Al hacer hover, borde negro sutil y sombra elegante */
+
   border-color: #eee;
   box-shadow: 0 10px 30px rgba(0,0,0,0.08);
   transform: translateY(-4px);
 }
 
 .card-image-container {
-  background-color: #f4f4f4; /* Fondo gris para la foto */
+  background-color: #f4f4f4; 
   width: 100%;
-  aspect-ratio: 1/1; /* Cuadrado perfecto */
+  aspect-ratio: 1/1; 
   border-radius: var(--radius);
   overflow: hidden;
   position: relative;
@@ -35,8 +28,8 @@ POR ESO EL TITULO TAN GRANDE, ARREGLAR ESTO*/
 .card-image-container img {
   width: 100%;
   height: 100%;
-  object-fit: contain; /* Para ver el skate entero */
-  mix-blend-mode: multiply; /* Truco: si la imagen tiene fondo blanco, esto lo integra mejor */
+  object-fit: contain; 
+  mix-blend-mode: multiply; /* si la imagen tiene fondo blanco, esto lo integra mejor */
   transition: transform 0.5s ease;
 }
 
@@ -104,9 +97,8 @@ POR ESO EL TITULO TAN GRANDE, ARREGLAR ESTO*/
   transition: all 0.2s;
 }
 
-/* El botón se pone negro al pasar el ratón por la TARJETA COMPLETA */
 .product-card:hover .btn-add {
-  background-color: #ff4d00; /* Se vuelve naranja */
+  background-color: #ff4d00; 
   border-color: var(--color-accent);
   color: black;
 }
@@ -118,12 +110,6 @@ POR ESO EL TITULO TAN GRANDE, ARREGLAR ESTO*/
   cursor: not-allowed;
 }
 
-/* src/styles/ProductCard.css */
 .product-card {
-    cursor: pointer; /* Esto pone la manita 👆 */
-    transition: transform 0.2s; /* Un poco de suavidad */
-}
-
-.product-card:hover {
-    transform: translateY(-5px); /* Se levanta un poco al pasar el ratón */
+  cursor: pointer; 
 }

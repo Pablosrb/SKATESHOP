@@ -1,0 +1,59 @@
+
+.second-hand-container {
+    padding: 20px;
+    max-width: 1200px; 
+    margin: 0 auto; 
+}
+
+/* --- CABECERA (Header) --- */
+.second-hand-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 20px;
+}
+
+.second-hand-header h1 {
+    margin: 0;
+    font-size: 2rem;
+    color: #333;
+}
+
+.second-hand-header p {
+    margin: 5px 0 0 0;
+    color: #666;
+    font-size: 0.95rem;
+}
+
+/* --- BOTÓN MIS ANUNCIOS --- */
+.btn-my-items {
+    
+    background-color: var(--color-accent, #f97316); 
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.btn-my-items:hover {
+    background-color: #e56611;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.used-item-grid {
+    display: grid;
+   
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 25px;
+}
+
+.state-message.error {
+    color: red;
+}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getTournaments, deleteTournament } from '@/services/tournamentService'; // 👈 Importamos delete
+import { getTournaments, deleteTournament } from '@/services/tournamentService';
 import { type Tournament } from '@/types/tournament';
 import '@/styles/TournamentsPage.css';
 
@@ -23,9 +23,8 @@ const TournamentsPage: React.FC = () => {
         if (user.role === 'admin') setIsAdmin(true);
     }, []);  
 
-    // --- FUNCIÓN DE BORRADO ---
     const handleDelete = async (e: React.MouseEvent, id: number) => {
-        e.stopPropagation(); // 👈 IMPORTANTE: Evita entrar al torneo al hacer click en borrar
+        e.stopPropagation();
         
         if (!confirm("⚠️ ¿Estás seguro de ELIMINAR este torneo?\nSe borrarán todos los partidos y registros asociados de la base de datos.")) {
             return;
@@ -33,7 +32,6 @@ const TournamentsPage: React.FC = () => {
 
         try {
             await deleteTournament(id);
-            // Actualizamos la lista visualmente quitando el torneo borrado
             setTournaments(prev => prev.filter(t => t.id !== id));
             alert("Torneo eliminado.");
         } catch (error) {
@@ -54,7 +52,7 @@ const TournamentsPage: React.FC = () => {
                 {t.status === 'finished' && 'FINALIZADO'}
             </div>
 
-            {/* 👇 BOTÓN DE BORRAR (Solo para Admin) */}
+            {/* Solo admin */}
             {isAdmin && (
                 <button 
                     className="btn-delete-card" 

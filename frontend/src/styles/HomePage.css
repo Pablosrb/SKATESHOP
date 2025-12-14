@@ -1,4 +1,4 @@
-/* --- HERO SECTION DIVIDIDO --- */
+
 
 .hero-split-container {
   display: flex;
@@ -8,21 +8,22 @@
   border-radius: 8px;
   overflow: hidden;
   position: relative;
-  background-color: #000; /* Fondo negro por si acaso carga lento */
+  background-color: #000; 
 }
 
 .hero-half {
-  flex: 1; /* Ocupan el mismo espacio por defecto */
+  flex: 1; /* mismo espacio por defecto */
   position: relative;
   background-size: cover;
   background-position: center;
   cursor: pointer;
-  transition: flex 0.5s cubic-bezier(0.25, 0.8, 0.25, 1); /* Transición suave tipo elástico */
+  transition: flex 0.5s cubic-bezier(0.25, 0.8, 0.25, 1); /* Transición suave */
   display: flex;
   justify-content: center;
   align-items: center;
   min-width: 0; /* Evita que el contenido desborde en flex */
 }
+
 /* FONDOS */
 .hero-half.left {
   background-image: url('../../public/images/hero-home/image-catalog-hero.png');
@@ -33,7 +34,6 @@
 }
 
 /* EFECTO DE MOVIMIENTO */
-/* Al poner el ratón en uno, ese crece (flex: 2) y el otro se queda igual (flex: 1) */
 .hero-half:hover {
   flex: 2; 
 }
@@ -58,18 +58,16 @@
 
 /* --- LA LÍNEA CENTRAL --- */
 .hero-divider {
-  width: 4px; /* Grosor de la línea vertical */
-  background-color: white; /* Color de la línea */
+  width: 4px;
+  background-color: white; 
   height: 100%;
-  position: relative; /* Para centrar el círculo dentro de ella */
+  position: relative; 
   z-index: 10;
-  flex-shrink: 0; /* Evita que la línea se aplaste */
   
   display: flex;
   align-items: center;
   justify-content: center;
   
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Sombra para que destaque */
 }
 
 /* --- EL CÍRCULO 'OR' --- */
@@ -79,7 +77,6 @@
   background-color: white;
   border-radius: 50%;
   
-  /* Centrado absoluto SOBRE la línea */
   position: absolute;
   top: 50%;
   left: 50%;
@@ -93,10 +90,9 @@
   font-style: italic;
   font-size: 1rem;
   color: #111;
-  border: 4px solid white; /* Borde negro para separarlo visualmente de la línea blanca */
+  border: 4px solid white; 
 }
 
-/* TEXTOS (Igual que antes) */
 .split-title {
   font-size: 4rem;
   color: white;
@@ -121,8 +117,26 @@
   border-radius: 4px;
 }
 
-/* Resto del CSS igual... */
-.home-content { padding-bottom: 50px; }
-.featured-section { max-width: 1200px; margin: 0 auto; padding: 0 20px;}
-.section-title { color: var(--text-primary); text-align: center; margin-bottom: 40px; font-size: 2rem; text-transform: uppercase; font-weight: 800; }
-.product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; justify-content: center; }
+.home-content { 
+  padding-bottom: 50px; 
+}
+
+.featured-section { 
+  max-width: 1200px; 
+  margin: 0 auto; 
+  padding: 0 20px;
+
+}
+.section-title { 
+  color: var(--text-primary); 
+  text-align: center; 
+  margin-bottom: 40px; 
+  font-size: 2rem; 
+  text-transform: uppercase; 
+  font-weight: 800; 
+}
+.product-grid { 
+  display: grid; 
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+  gap: 30px; justify-content: center; 
+}

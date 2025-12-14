@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { registerUser } from '../services/authService';
-import '../styles/Login.css'; // Reutilizamos estilos
+import { registerUser } from '@/services/authService';
+import '@/styles/Login.css'; // Reutilizamos estilos
 
 const RegisterPage: React.FC = () => {
     const navigate = useNavigate();
@@ -19,25 +19,22 @@ const RegisterPage: React.FC = () => {
         setError(null);
 
         try {
-            // 1. Registrar usuario
+            // Registrar usuario
             const data = await registerUser(name, email, password);
 
-            // 2. Guardar token (Auto-Login)
-            // Tu backend devuelve 'access_token' en el registro también
+            // Guardar tken
             const token = data.access_token;
 
             if (token) {
                 localStorage.setItem('user_token', token);
                 
-                // Si quieres guardar datos del usuario:
-                if (data.data) { // Nota: en el register de Laravel lo llamaste 'data' al user
+                if (data.data) { 
                     localStorage.setItem('user_data', JSON.stringify(data.data));
                 }
 
                 console.log('Registro exitoso, redirigiendo...');
-                navigate('/catalogo'); // O a donde prefieras
+                navigate('/catalogo'); 
             } else {
-                // Si por alguna razón no llega el token, mándalo al login
                 navigate('/login');
             }
 
@@ -57,7 +54,6 @@ const RegisterPage: React.FC = () => {
                 {error && <div className="error-message">{error}</div>}
 
                 <form onSubmit={handleSubmit}>
-                    {/* CAMPO NOMBRE (Nuevo) */}
                     <div className="form-group">
                         <label>Nombre</label>
                         <input 
@@ -100,9 +96,9 @@ const RegisterPage: React.FC = () => {
                     </button>
                 </form>
                 
-                <p style={{marginTop: '20px', fontSize: '0.9rem'}}>
+                <p>
                     ¿Ya tienes cuenta?{' '}
-                    <Link to="/login" style={{color: 'blue', cursor: 'pointer', textDecoration: 'underline'}}>
+                    <Link to="/login">
                         Inicia sesión aquí
                     </Link>
                 </p>

@@ -56,8 +56,16 @@
     border-radius: 4px;
     text-transform: uppercase;
 }
-.badge.new { background: #e0f2fe; color: #0284c7; }
-.badge.used { background: #fef9c3; color: #a16207; }
+
+.badge.new { 
+    background: #e0f2fe; 
+    color: #0284c7; 
+}
+
+.badge.used { background: 
+    #fef9c3; 
+    color: #a16207; 
+}
 
 /* CONTROLES CANTIDAD */
 .quantity-controls {
@@ -130,34 +138,27 @@
     border-radius: 6px;
 }
 
-/* RESPONSIVE */
 @media (max-width: 768px) {
     .cart-layout {
         grid-template-columns: 1fr;
     }
 }
 
-/* ... tus estilos anteriores ... */
 
-/* Añadir feedback visual de que es un enlace */
 .cart-item-card .clickable {
     cursor: pointer;
     transition: opacity 0.2s;
 }
 
-/* Efecto hover en la imagen */
 .cart-item-card .item-image.clickable:hover {
     opacity: 0.8;
 }
 
-/* Efecto hover en el texto */
 .cart-item-card .item-details.clickable:hover h3 {
-    color: var(--color-accent, #f97316); /* O el color naranja de tu marca */
+    color: var(--color-accent, #f97316);
     text-decoration: underline;
 }
 
-/* Ajuste para que la imagen no se deforme */
 .item-image img {
-    /* ... lo que tenías antes ... */
-    object-fit: contain; /* O cover, según prefieras */
+    object-fit: contain; 
 }

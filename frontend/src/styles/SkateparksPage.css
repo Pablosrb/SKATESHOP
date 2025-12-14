@@ -23,9 +23,9 @@
     margin-top: 10px;
 }
 
-/* IMPORTANTE: Contenedor del mapa */
+/* Contenedor del mapa */
 .map-wrapper {
-    height: 500px; /* Altura fija para el mapa */
+    height: 500px; 
     width: 100%;
     border-radius: 12px;
     overflow: hidden;
@@ -42,6 +42,6 @@
 
 @media (max-width: 768px) {
     .map-wrapper {
-        height: 350px; /* Un poco más pequeño en móvil */
+        height: 350px;
     }
 }

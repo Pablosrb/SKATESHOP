@@ -68,13 +68,13 @@ input:focus, select:focus, textarea:focus {
   outline: none;
 }
 
-/* Estilos para el input de archivo (File) */
+/* Estilos para el input de archivo */
 .file-upload-wrapper {
   position: relative;
 }
 
 .file-input {
-  display: none; /* Ocultamos el input feo por defecto */
+  display: none;
 }
 
 .file-label {

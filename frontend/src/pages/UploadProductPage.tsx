@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { createUsedItem } from '../services/usedItemService'; // <--- IMPORTAMOS EL SERVICIO
-import '../styles/UploadProduct.css';
+import { createUsedItem } from '@/services/usedItemService'; 
+import '@/styles/UploadProduct.css';
 
 const UploadProductPage: React.FC = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [preview, setPreview] = useState<string | null>(null);
 
-  // 1. ESTADO: Añadimos 'status' con valor por defecto 'active'
   const [formData, setFormData] = useState({
     title: '',
     price: '',
@@ -39,9 +38,7 @@ const UploadProductPage: React.FC = () => {
     try {
       const userStr = localStorage.getItem('user_data');
       if (!userStr) throw new Error("Usuario no identificado");
-      // const user = JSON.parse(userStr);
 
-      // 1. Preparamos el FormData igual que antes
       const dataToSend = new FormData();
       // dataToSend.append('user_id', user.id);
       dataToSend.append('title', formData.title);
@@ -54,10 +51,8 @@ const UploadProductPage: React.FC = () => {
         dataToSend.append('image', imageFile);
       }
 
-      // 2. LLAMADA AL SERVICIO (Mucho más limpio)
       await createUsedItem(dataToSend);
 
-      // 3. Éxito
       const mensaje = formData.status === 'active' 
         ? '¡Anuncio publicado correctamente!' 
         : '¡Producto guardado en tus archivos!';
@@ -67,7 +62,6 @@ const UploadProductPage: React.FC = () => {
 
     } catch (error: any) {
       console.error('Error:', error);
-      // Ahora mostramos el mensaje que viene del servicio (que a su vez viene de Laravel)
       alert(error.message || 'Hubo un error al guardar el producto.');
     } finally {
       setLoading(false);
@@ -82,7 +76,7 @@ const UploadProductPage: React.FC = () => {
 
         <form onSubmit={handleSubmit} className="upload-form">
           
-          {/* TÍTULO */}
+          {/* NOMBRE */}
           <div className="form-group">
             <label>Título</label>
             <input 
@@ -112,7 +106,7 @@ const UploadProductPage: React.FC = () => {
               />
             </div>
 
-            {/* CONDICIÓN FÍSICA */}
+            {/* ESTADO */}
             <div className="form-group">
               <label>Estado del producto</label>
               <select name="condition" value={formData.condition} onChange={handleChange}>
@@ -136,7 +130,7 @@ const UploadProductPage: React.FC = () => {
             ></textarea>
           </div>
 
-          {/* ESTADO DE LA PUBLICACIÓN (VISIBILIDAD) */}
+          {/* ESTADO DE LA PUBLICACIÓN */}
           <div className="form-group" style={{background: '#f9f9f9', padding: '10px', borderRadius: '6px'}}>
             <label>Visibilidad del anuncio</label>
             <select name="status" value={formData.status} onChange={handleChange}>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { loginUser } from '../services/authService';
-import '../styles/Login.css';
+import { loginUser } from '@/services/authService';
+import '@/styles/Login.css';
 
 const LoginPage: React.FC = () => {
     const navigate = useNavigate();
@@ -13,17 +13,13 @@ const LoginPage: React.FC = () => {
     const [loading, setLoading] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault(); // Evita que la página se recargue
+        e.preventDefault(); 
         setLoading(true);
         setError(null);
 
         try {
-            // 1. Llamamos a Laravel
             const data = await loginUser(email, password);
 
-            // 2. IMPORTANTE: Guardamos el token en el navegador
-            // Verifica cómo devuelve Laravel el token. 
-            // Normalmente es data.token o data.access_token
             const token = data.token || data.access_token; 
             
             if (!token) {
@@ -32,16 +28,12 @@ const LoginPage: React.FC = () => {
 
             localStorage.setItem('user_token', token);
             
-            // Opcional: Guardar datos del usuario si los necesitas
             if (data.user) {
                 localStorage.setItem('user_data', JSON.stringify(data.user));
             }
 
             console.log('Login exitoso, redirigiendo...');
-            
-            // 3. Redirigimos. 
-            // Si el usuario quería ir a /segunda-mano, lo mandamos ahí.
-            navigate('/segunda-mano'); 
+            navigate('/catalogo'); 
 
         } catch (err: any) {
             console.error(err);
@@ -88,9 +80,9 @@ const LoginPage: React.FC = () => {
                     </button>
                 </form>
                 
-                <p style={{marginTop: '20px', fontSize: '0.9rem'}}>
+                <p>
                     ¿No tienes cuenta?{' '}
-                    <Link to="/register" style={{color: 'blue', cursor: 'pointer', textDecoration: 'underline'}}>
+                    <Link to="/register">
                         Regístrate aquí
                     </Link>
                 </p>    

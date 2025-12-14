@@ -3,11 +3,12 @@
     padding: 30px;
     max-width: 1200px;
     margin: 0 auto;
-    color: white; /* Asumiendo fondo oscuro global */
+    color: white; 
 }
 
 /* Cabecera */
 .page-header {
+    color: #1e1e1e;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -39,9 +40,9 @@
 }
 
 /* Colores por estado */
-.section-title.open { border-color: #ef4444; color: #ef4444; }    /* Rojo */
-.section-title.ongoing { border-color: #3b82f6; color: #3b82f6; } /* Azul */
-.section-title.finished { border-color: #eab308; color: #eab308; }/* Dorado */
+.section-title.open { border-color: #ef4444; color: #ef4444; }    
+.section-title.ongoing { border-color: #3b82f6; color: #3b82f6; } 
+.section-title.finished { border-color: #eab308; color: #eab308; }
 
 /* Grid */
 .tournament-grid {
@@ -73,7 +74,7 @@
     margin-bottom: 15px;
 }
 
-/* Badges (Etiquetas de estado) */
+/* Badges */
 .status-badge {
     position: absolute;
     top: 15px;
@@ -91,17 +92,20 @@
 .participants-bar {
     margin-top: 10px;
 }
+
 .participants-bar span {
     display: block;
     font-size: 0.8rem;
     margin-bottom: 5px;
     color: #ccc;
 }
+
 progress {
     width: 100%;
     height: 8px;
     border-radius: 4px;
 }
+
 /* Estilo del ganador */
 .winner-banner {
     margin-top: 15px;
@@ -119,16 +123,13 @@ progress {
     color: #888;
 }
 
-/* Botón de borrar flotante */
+/* Botón de borrar  */
 .btn-delete-card {
     position: absolute;
     
-    /* CAMBIO: Lo colocamos a la derecha, pero bajándolo un poco */
-    /* El badge está en top:15px, así que ponemos esto en top:50px */
     top: 50px; 
     right: 15px;
     
-    /* Reseteamos los otros por si acaso */
     bottom: auto; 
     left: auto;
     

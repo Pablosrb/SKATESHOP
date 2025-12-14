@@ -9,19 +9,16 @@ import { type Tournament } from '@/types/tournament';
 
 const TournamentDetailPage: React.FC = () => {
     const { id } = useParams();
-    // const navigate = useNavigate(); // Quitamos navigate si no lo usamos abajo
     
     const [tournament, setTournament] = useState<Tournament | null>(null);
     const [loading, setLoading] = useState(true);
     const [matchesForBracket, setMatchesForBracket] = useState<any[]>([]);
     
-    // const [userId, setUserId] = useState<number | null>(null); // Quitamos si no lo usamos
     const [isAdmin, setIsAdmin] = useState(false);
 
     const loadData = async () => {
         try {
             if (!id) return;
-            // Forzamos el tipo aquí para que TS sepa que trae matches
             const data = await getTournamentById(id);
             setTournament(data);
 
@@ -33,7 +30,6 @@ const TournamentDetailPage: React.FC = () => {
             const userStr = localStorage.getItem('user_data');
             if (userStr) {
                 const user = JSON.parse(userStr);
-                // setUserId(user.id);
                 setIsAdmin(user.role === 'admin');
             }
         } catch (err) {
@@ -62,14 +58,13 @@ const TournamentDetailPage: React.FC = () => {
     const bracketWidth = tournament.max_participants > 8 ? 1500 : 1000;
 
     return (
-        <div style={{ padding: 20, maxWidth: '100%', overflowX: 'auto', background: '#222', minHeight: '100vh', color: 'white' }}>
+        <div style={{ padding: 20, maxWidth: '100%', overflowX: 'auto', minHeight: '100vh', color: 'black' }}>
             
             <div style={{ marginBottom: 30, textAlign: 'center' }}>
                 <h1 style={{margin: 0}}>{tournament.name}</h1>
                 <p>📍 {tournament.location}</p>
             </div>
 
-            {/* Componente AdminToolbar arreglado */}
             <AdminToolbar isAdmin={isAdmin} status={tournament.status} onStart={handleStart} />
 
             {tournament.status === 'open' ? (
@@ -82,15 +77,15 @@ const TournamentDetailPage: React.FC = () => {
                 <div style={{ height: 600 }}>
                     <SingleEliminationBracket
                         matches={matchesForBracket}
-                        matchComponent={(props: any) => ( // 👈 Añadido :any para silenciar el error
+                        matchComponent={(props: any) => (
                             <MatchCard 
                                 {...props} 
                                 isAdmin={isAdmin} 
                                 onDeclareWinner={handleWin} 
                             />
                         )}
-                        svgWrapper={({ children, ...props }: any) => ( // 👈 Añadido :any para silenciar el error
-                            <SVGViewer width={bracketWidth} height={600} background="#222" SVGBackground="#222" {...props}>
+                        svgWrapper={({ children, ...props }: any) => ( 
+                            <SVGViewer width={bracketWidth} height={600} {...props}>
                                 {children}
                             </SVGViewer>
                         )}

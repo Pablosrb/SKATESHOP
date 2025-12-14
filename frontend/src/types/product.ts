@@ -3,11 +3,11 @@ export interface Product {
   category_id: number;
   brand_id: number;
   name: string;
-  image: string | null; // El backend devuelve null si no hay imagen
-  description: string; // Usaremos esta como la descripción corta
-  price: string;       // ¡CLAVE! El precio viene como STRING ("89.99")
+  image: string | null; 
+  description: string; 
+  price: string;       
   stock: number;
-  is_active: number;   // 1 o 0 (Aunque internamente Laravel lo maneje como boolean, el JSON es number)
+  is_active: number;   
   created_at: string;
   updated_at: string;
 
@@ -30,7 +30,7 @@ export interface ProductsApiResponse {
     products: Product[];
 }
 
-// Para un solo producto (Tu respuesta nueva)
+// Para un solo producto
 export interface ProductApiResponse {
     message: string;
     product: Product;

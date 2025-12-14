@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { Map, Marker, Overlay } from 'pigeon-maps';
-import '../styles/SkateparksPage.css';
+import '@/styles/SkateparksPage.css';
 
 const skateparks = [
-    // --- MÁLAGA CAPITAL ---
     { 
         id: 1, 
         name: "Skatepark Málaga (Rubén Alcántara)", 
@@ -49,20 +48,19 @@ const skateparks = [
 ];
 
 const SkateparksPage: React.FC = () => {
-  // Ajustamos el zoom a 9 o 10 para ver desde Rincón hasta Marbella
   const [center, setCenter] = useState<[number, number]>([36.6500, -4.5000]); 
   const [zoom, setZoom] = useState(10);
 
   return (
     <div className="skateparks-container">
       <div className="text-content">
-        <h1>📍 Mapa de Spots</h1>
+        <h1>Mapa de Spots</h1>
         <p>Descubre los mejores skateparks de la Costa del Sol.</p>
       </div>
 
       <div className="map-wrapper">
         <Map 
-            height={550} // Un poco más alto para ver mejor
+            height={550} 
             center={center} 
             zoom={zoom} 
             onBoundsChanged={({ center, zoom }) => { 
@@ -70,18 +68,17 @@ const SkateparksPage: React.FC = () => {
                 setZoom(zoom); 
             }}
         >
-          {/* 1. MARCADORES (Puntos Naranjas) */}
           {skateparks.map(park => (
              <Marker 
                 key={park.id} 
-                width={40} // Tamaño del pin
+                width={40} 
                 anchor={park.anchor} 
                 color="#ff4d00" 
-                onClick={() => alert(`🛹 ${park.name}\n\n${park.desc}`)}
+                onClick={() => alert(`${park.name}\n\n${park.desc}`)}
              />
           ))}
 
-          {/* 2. ETIQUETAS (Texto flotante) */}
+          
           {skateparks.map(park => (
             <Overlay key={'ov-' + park.id} anchor={park.anchor} offset={[0, 30]}>
               <div className="map-label" style={{

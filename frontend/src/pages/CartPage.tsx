@@ -27,7 +27,7 @@ const CartPage: React.FC = () => {
                     {cart.map((item) => (
                         <div key={item.id} className="cart-item-card">
                             
-                            {/* 1. SECCIÓN CLICABLE (IMAGEN) */}
+                            {/* SECCIÓN CLICABLE */}
                             <div 
                                 className="item-image clickable" 
                                 onClick={() => navigate(`/producto/${item.id}`)}
@@ -35,7 +35,6 @@ const CartPage: React.FC = () => {
                                 <img src={item.image || 'https://via.placeholder.com/100'} alt={item.name} />
                             </div>
                             
-                            {/* 2. SECCIÓN CLICABLE (INFO) */}
                             <div 
                                 className="item-details clickable"
                                 onClick={() => navigate(`/producto/${item.id}`)}
@@ -44,7 +43,7 @@ const CartPage: React.FC = () => {
                                 <p className="item-price">{item.price.toFixed(2)} €</p>
                             </div>
 
-                            {/* 3. ACCIONES (NO CLICABLES PARA NAVEGACIÓN) */}
+                            {/* ACCIONES (NO CLICABLES PARA NAVEGACIÓN) */}
                             <div className="item-actions">
                                 <div className="quantity-controls">
                                     <button onClick={() => updateQuantity(item.id, -1)}>-</button>
@@ -63,7 +62,6 @@ const CartPage: React.FC = () => {
                 </div>
 
                 <div className="cart-summary">
-                    {/* ... (Esta parte del resumen no cambia) ... */}
                     <h3>Resumen</h3>
                     <div className="summary-row">
                         <span>Subtotal</span>

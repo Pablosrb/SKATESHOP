@@ -60,12 +60,10 @@ const UsedItemCard: React.FC<UsedItemCardProps> = ({ item }) => {
                 <div className="card-footer">
                     <span className="price">{item.price} €</span>
                     
-                    {/* Botón diferente para diferenciar del catálogo oficial */}
                     <button 
                         className="btn-add"
                         disabled={item.status === 'sold'}
                         style={{ borderColor: '#333', color: '#333' }}
-                        onClick={() => console.log('Ir al detalle o chat', item.id)}
                     >
                         {item.status === 'sold' ? 'Vendido' : 'Ver'}
                     </button>

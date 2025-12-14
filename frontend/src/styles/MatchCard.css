@@ -1,0 +1,68 @@
+
+.match-card {
+    display: flex;
+    flex-direction: column;
+    background: #1a1a1a; 
+    border-radius: 8px;
+    width: 250px;
+    overflow: hidden;
+    border: 1px solid #555;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.match-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.5);
+}
+
+.match-card-header-bar {
+    height: 8px;
+    background: #000; 
+}
+
+.party-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    border-bottom: 1px solid #444;
+    background: #2a2a2a; 
+    color: white;
+    font-weight: normal;
+    font-size: 0.95rem;
+}
+
+.party-row.winner {
+    background: #dcfce7;
+    color: #166534; 
+    font-weight: bold;
+}
+
+.party-row:last-child {
+    border-bottom: none; 
+}
+
+
+.party-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 180px;
+}
+
+/* Estilo para el botón de administrador (👑) */
+.admin-winner-btn {
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-size: 1.2rem;
+    padding: 0; /* Asegura que solo el emoji sea cliqueable */
+    line-height: 1;
+    margin-left: 8px; /* Pequeño espacio a la izquierda */
+}
+
+/* Estilo para el contenedor del botón del ganador cuando la fila es clara (ganador) */
+.party-row.winner .admin-winner-btn {
+    color: #166534; 
+}

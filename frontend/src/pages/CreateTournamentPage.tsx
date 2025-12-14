@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createTournament } from '@/services/tournamentService';
-import '@/styles/Login.css'; // Reutilizamos estilos del login
+import '@/styles/Login.css';
 
 const CreateTournamentPage: React.FC = () => {
     const navigate = useNavigate();
@@ -10,7 +10,7 @@ const CreateTournamentPage: React.FC = () => {
         description: '',
         start_date: '',
         location: '',
-        max_participants: 8 // Por defecto
+        max_participants: 8
     });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -21,8 +21,7 @@ const CreateTournamentPage: React.FC = () => {
         e.preventDefault();
         try {
             await createTournament(formData);
-            alert('Torneo creado con éxito');
-            navigate('/events'); // Volver a la lista
+            navigate('/events');
         } catch (error) {
             alert('Error al crear el torneo');
         }
@@ -54,6 +53,7 @@ const CreateTournamentPage: React.FC = () => {
                             <option value="4">4 (Semifinales directas)</option>
                             <option value="8">8 (Cuartos de final)</option>
                             <option value="16">16 (Octavos de final)</option>
+
                         </select>
                     </div>
 

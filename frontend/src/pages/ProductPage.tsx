@@ -2,16 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getProductById } from '../services/productService';
 import { type Product } from '../types/product';
+import { useCart } from '@/context/CartContext';
+
 import '../styles/ProductPage.css';
 
 const ProductPage: React.FC = () => {
-  const { id } = useParams<{ id: string }>(); // Captura el ID de la URL
+  const { id } = useParams<{ id: string }>(); 
   const navigate = useNavigate();
   
   // Estados de datos
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const { addToCart } = useCart(); 
 
   // Estados visuales
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
@@ -22,6 +25,16 @@ const ProductPage: React.FC = () => {
   // Tallas simuladas (Ya que no vienen en tu BD, las ponemos fijas para que quede bonito)
   const sizes = ['7.75"', '8.0"', '8.125"', '8.25"', '8.5"'];
 
+  const handleAddToCart = () => {
+    addToCart({
+        id: product.id,
+        name: product.name,
+        price: typeof product.price === 'string' ? parseFloat(product.price) : product.price,
+        image: product.image || undefined,         
+        quantity: 1,
+    });
+  };
+
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -29,7 +42,6 @@ const ProductPage: React.FC = () => {
         setLoading(true);
         setError(null);
 
-        // 1. Llamada real a tu API
         const data = await getProductById(id);
         setProduct(data);
 
@@ -44,12 +56,11 @@ const ProductPage: React.FC = () => {
     fetchProduct();
   }, [id]);
 
-  // --- RENDERIZADO DE ESTADOS DE CARGA ---
 
   if (loading) {
     return (
       <div className="product-page-container" style={{ padding: '100px', textAlign: 'center' }}>
-        <h2>Cargando tabla... 🛹</h2>
+        <h2>Cargando tabla... </h2>
       </div>
     );
   }
@@ -63,14 +74,12 @@ const ProductPage: React.FC = () => {
     );
   }
 
-  // --- RENDERIZADO DEL PRODUCTO REAL ---
 
   return (
     <div className="product-page-container">
       
       {/* Miga de pan */}
       <div className="breadcrumbs">
-        {/* Aquí preguntamos: ¿Existe product.category? Si sí, pon su nombre. Si no, pon "Catálogo" */}
         Inicio <span>/</span> {product.category?.name || 'Catálogo'} <span>/</span> {product.name}
       </div>
 
@@ -80,10 +89,8 @@ const ProductPage: React.FC = () => {
 
       <div className="product-main-grid">
         
-        {/* COLUMNA IZQUIERDA: FOTO */}
         <div className="product-gallery">
           <div className="main-image-container">
-            {/* Si product.image es null, usa el placeholder */}
             <img 
               src={product.image ? product.image : placeholderImage} 
               alt={product.name} 
@@ -92,17 +99,14 @@ const ProductPage: React.FC = () => {
           </div>
         </div>
 
-        {/* COLUMNA DERECHA: INFO */}
         <div className="product-info">
-          {/* Usamos un texto fijo o mapeamos el ID si quisieras, 
-              porque mostrar "Marca: 4" queda feo */}
+          
           <h4 className="product-brand">
             {product.brand?.name || 'MARCA DESCONOCIDA'}
           </h4>
 
           <h1 className="product-title">{product.name}</h1>
           
-          {/* El precio viene como string, le añadimos el euro */}
           <span className="product-price">{product.price} €</span>
           
           <p className="product-description">
@@ -121,7 +125,7 @@ const ProductPage: React.FC = () => {
             </strong>
           </div>
 
-          {/* SELECTOR DE TALLAS (VISUAL) */}
+          {/* SELECTOR DE TALLAS */}
           <div className="size-selector-container">
             <label className="size-selector-label">Selecciona el ancho:</label>
             <div className="size-options">
@@ -137,12 +141,13 @@ const ProductPage: React.FC = () => {
             </div>
           </div>
 
-          {/* BOTONES */}
           <div className="action-buttons">
             <button 
               className="add-to-cart-btn"
               disabled={product.stock === 0} // Desactiva si no hay stock
               style={product.stock === 0 ? { backgroundColor: '#ccc', cursor: 'not-allowed' } : {}}
+              onClick={handleAddToCart}
+
             >
               {product.stock > 0 ? 'Añadir al Carrito' : 'Agotado'}
             </button>

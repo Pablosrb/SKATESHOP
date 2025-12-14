@@ -1,9 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { RouterProvider } from 'react-router-dom' // 👈 Importante
+import { RouterProvider } from 'react-router-dom' 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { router } from './router' // 👈 Importamos nuestro router nuevo
-import './index.css'
+import { router } from '@/router' 
+import '@/index.css'
 
 import { CartProvider } from '@/context/CartContext';
 
@@ -14,7 +14,6 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <QueryClientProvider client={queryClient}>
 
       <CartProvider>
-        {/* Eliminamos <App /> y ponemos el RouterProvider */}
         <RouterProvider router={router} />
       </CartProvider>
 
@@ -23,19 +22,3 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 )
 
 
-// import { StrictMode } from 'react'
-// import { createRoot }from 'react-dom/client'
-// import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-// import App from './App' // Dejaremos App como punto de entrada por ahora
-// import './index.css'
-
-// // Creamos el cliente de gestión de datos
-// const queryClient = new QueryClient()
-
-// createRoot(document.getElementById('root')!).render(
-//   <StrictMode>
-//     <QueryClientProvider client={queryClient}>
-//       <App />
-//     </QueryClientProvider>
-//   </StrictMode>,
-// )

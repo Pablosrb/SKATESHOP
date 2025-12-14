@@ -29,10 +29,8 @@ const MyUsedItemsPage: React.FC = () => {
     // Manejar cambio de estado (Select)
     const handleStatusChange = async (id: number, newStatus: string) => {
         try {
-            // 1. Llamada a la API
             await updateUsedItemStatus(id, newStatus);
             
-            // 2. Actualizar visualmente la lista sin recargar
             setItems(prevItems => prevItems.map(item => 
                 item.id === id ? { ...item, status: newStatus as any } : item
             ));
@@ -49,14 +47,12 @@ const MyUsedItemsPage: React.FC = () => {
 
         try {
             await deleteUsedItem(id);
-            // Eliminar de la lista visualmente
             setItems(prevItems => prevItems.filter(item => item.id !== id));
         } catch (error) {
             alert('Error al eliminar');
         }
     };
 
-    // Filtrar visualmente
     const filteredItems = items.filter(item => 
         filter === 'all' ? true : item.status === filter
     );
@@ -90,7 +86,7 @@ const MyUsedItemsPage: React.FC = () => {
                     ) : (
                         filteredItems.map(item => (
                             <div key={item.id} className={`manage-card ${item.status}`}>
-                                {/* Imagen pequeña */}
+                                {/* Imagen */}
                                 <div className="manage-img">
                                     <img src={item.image_url || 'https://placehold.co/100'} alt={item.title} />
                                 </div>
@@ -102,7 +98,7 @@ const MyUsedItemsPage: React.FC = () => {
                                     <p className="date">Subido el: {new Date(item.created_at).toLocaleDateString()}</p>
                                 </div>
 
-                                {/* CONTROLES DE GESTIÓN */}
+                                {/* Cateogria */}
                                 <div className="manage-actions">
                                     <div className="status-control">
                                         <label>Estado: </label>

@@ -72,7 +72,7 @@
     box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }
 
-/* Estilo visual si está vendido */
+/* si está vendido */
 .manage-card.sold {
     opacity: 0.7;
     background-color: #f9f9f9;
@@ -86,7 +86,7 @@
 }
 
 .manage-info {
-    flex: 1; /* Ocupa el espacio central */
+    flex: 1;
 }
 
 .manage-info h3 {

@@ -1,4 +1,3 @@
-/* src/styles/CatalogoPage.css */
 .catalogo-container {
   width: 90%;
   margin:auto;
@@ -11,25 +10,9 @@
   display: inline-block;
 }
 
-/* Pequeña linea roja debajo del título */
-.catalogo-container h1::after {
-  content: '';
-  position: absolute;
-  bottom: -5px;
-  left: 0;
-  width: 60px;
-  height: 4px;
-  background-color: var(--color-accent);
-}
-
 .products-grid {
   display: grid;
-  /* MAGIA RESPONSIVE:
-     - Crea columnas automáticas.
-     - Mínimo 250px de ancho.
-     - Si hay espacio, repártelo (1fr).
-  */
-  grid-template-columns: repeat(auto-fill, minmax(20%, 1fr));/*Para que salgan 4*/
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));/*Para que salgan 4*/
   gap: 20px;
 }
 
